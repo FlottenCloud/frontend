@@ -17,7 +17,10 @@
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-query": "^3.34.19"
+    "react-query": "^3.34.19",
+    "chart.js": "^3.8.0",
+    "chartjs-plugin-datalabels": "^2.0.0",
+    "react-chartjs-2": "^4.3.1"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.0",
