@@ -11,12 +11,12 @@ const Dashboard = () => {
     <DefaultLayout>
       <Flex row gap={20}>
         <DashboardItem
-          used={readDash?.data?.ram_size}
+          used={readDash?.data?.ram_size ?? 0}
           total={50}
           title={"MEMORY"}
         />
         <DashboardItem
-          used={readDash?.data?.volume_size}
+          used={readDash?.data?.volume_size ?? 0}
           total={50}
           title={"DISK"}
         />

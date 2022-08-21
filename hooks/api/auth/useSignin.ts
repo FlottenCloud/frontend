@@ -8,7 +8,7 @@ export interface SigninParams extends DefaultParams {
 }
 
 const signin = async (params: SigninParams) => {
-  const url = `/account/login`;
+  const url = `/account/login/`;
   const { data } = await DefaultAxiosService.instance.post(url, {
     user_id: params.id,
     password: params.password,

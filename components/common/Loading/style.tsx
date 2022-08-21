@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { NUMBER } from "constants/common/theme";
 import { COLOR } from "constants/common/theme";
 
 export const Loading = styled.div`
@@ -32,7 +31,7 @@ export const LoadingBar = styled.span`
     border-radius: 50%;
     content: "";
     box-sizing: inherit;
-    border-top: 5px solid ${COLOR.SEOUL_YELLOW};
+    border-top: 5px solid ${COLOR.KEY_COLOR};
     top: 0;
     bottom: 0;
     left: 0;

@@ -20,7 +20,10 @@ const Signin = () => {
     signin.mutate({
       id,
       password,
-      successCallback: () => router.push("/"),
+      successCallback: (res) => {
+        router.push("/");
+        localStorage.setItem("token", res.openstack_user_token);
+      },
     });
   }, [router, signin, id, password]);
 

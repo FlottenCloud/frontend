@@ -1,16 +1,18 @@
 import * as Style from "./style";
-import { COLOR, FONT } from "constants/common/theme";
 import { useRouter } from "next/router";
-import { DefaultAxiosService } from "types/defaultAxiosService";
 import Flex from "components/common/Flex";
-import { useCallback } from "react";
-import FigureImage from "components/common/FigureImage";
 import { Button, Typography } from "@mui/material";
 import Image from "next/image";
 import { MENU } from "constants/common/menu";
+import { useCallback } from "react";
 
 const Header = () => {
   const router = useRouter();
+
+  const handleSignoutClick = useCallback(() => {
+    localStorage.setItem("token", "");
+    router.push("/auth/signin");
+  }, [router]);
 
   return (
     <Style.Header>
@@ -20,7 +22,7 @@ const Header = () => {
       <Flex row align="center" gap={10}>
         <Typography>{"userEmail"}</Typography>
         <Button
-          onClick={() => {}}
+          onClick={handleSignoutClick}
           variant="contained"
           size="small"
           startIcon={
