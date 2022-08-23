@@ -20,6 +20,11 @@ const Dashboard = () => {
           total={50}
           title={"DISK"}
         />
+        {/* <DashboardItem
+          used={readDash?.data?.gpu_size ?? 10}
+          total={50}
+          title={"GPU"}
+        /> */}
       </Flex>
     </DefaultLayout>
   );

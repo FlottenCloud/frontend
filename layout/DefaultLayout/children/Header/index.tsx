@@ -4,33 +4,38 @@ import Flex from "components/common/Flex";
 import { Button, Typography } from "@mui/material";
 import Image from "next/image";
 import { MENU } from "constants/common/menu";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Header = () => {
   const router = useRouter();
+  const [userId, setUserId] = useState<string>("");
 
   const handleSignoutClick = useCallback(() => {
     localStorage.setItem("token", "");
     router.push("/auth/signin");
   }, [router]);
 
+  useEffect(() => {
+    setUserId(localStorage.getItem("userId"));
+  }, []);
+
   return (
     <Style.Header>
-      <Typography>
+      <Typography variant="subtitle1">
         {MENU.find((item) => router.pathname.includes(item.url))?.title}
       </Typography>
       <Flex row align="center" gap={10}>
-        <Typography>{"userEmail"}</Typography>
+        <Typography variant="subtitle1">{`login user : ${userId}`}</Typography>
         <Button
           onClick={handleSignoutClick}
           variant="contained"
-          size="small"
+          size="medium"
           startIcon={
             <Image
-              src={"/images/sidebar/logout.png"}
+              src={"/images/sidebar/logout2.png"}
               alt={"logout"}
-              width={20}
-              height={20}
+              width={14}
+              height={14}
             />
           }
         >

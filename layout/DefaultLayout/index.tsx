@@ -1,5 +1,6 @@
 import Flex from "components/common/Flex";
 import Loading from "components/common/Loading";
+import PostModal from "dependency/PostModal";
 import { useIsFetching } from "react-query";
 import Header from "./children/Header";
 import Pagination from "./children/Pagination";
@@ -19,8 +20,8 @@ const DefaultLayout = ({ children, pages }: DefaultLayoutPorps) => {
       <Sidebar />
       <Flex style={{ flex: 1, position: "relative" }}>
         {isLoading && <Loading />}
-        {/* <MutateModal />
-        <ChoiceAlert /> */}
+        <PostModal />
+        {/* <ChoiceAlert /> */}
         <Header />
         <Flex style={{ padding: "20px" }}>{children}</Flex>
         {pages !== 0 && pages !== undefined && <Pagination pages={pages} />}

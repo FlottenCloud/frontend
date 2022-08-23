@@ -22,11 +22,11 @@ const SideBar = () => {
         style={{ width: "100%" }}
       >
         <Typography
-          variant="h3"
-          style={{ color: COLOR.KEY_COLOR, textAlign: "center" }}
-        >{`TEAM NOVA`}</Typography>
+          variant="h4"
+          style={{ color: COLOR.WHITE, textAlign: "center" }}
+        >{`뜬구름`}</Typography>
       </Flex>
-      <Flex gap={10} style={{ width: "100%" }}>
+      <Flex gap={16} style={{ width: "100%" }}>
         {MENU.map((item) => {
           return (
             <SideBarItem

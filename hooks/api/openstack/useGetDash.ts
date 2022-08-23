@@ -2,7 +2,6 @@ import { DefaultParams } from "./../../../types/api/common/params";
 import { QueryResult } from "types/api/common/response";
 import { useQuery } from "react-query";
 import { DefaultAxiosService } from "types/defaultAxiosService";
-import { ReadAllUserResponse } from "types/api/user/readAllUser";
 import { ReadDashResponse } from "types/api/openstack/readDash";
 
 export interface ReadDashParams extends DefaultParams {}

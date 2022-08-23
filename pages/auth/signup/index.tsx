@@ -5,6 +5,7 @@ import CenteredLayout from "layout/CenteredLayout";
 import { Button, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import useSignup from "hooks/api/auth/useSignup";
+import usePostModal from "hooks/common/usePostModal";
 
 const Signup = () => {
   const signup = useSignup();
@@ -22,9 +23,13 @@ const Signup = () => {
       id,
       email,
       password,
-      successCallback: () => router.push("/auth/signin"),
+      successCallback: () => {
+        router.push("/auth/signin");
+      },
     });
   }, [router, signup, id, email, password]);
+
+  usePostModal({ mutation: signup });
 
   return (
     <CenteredLayout>

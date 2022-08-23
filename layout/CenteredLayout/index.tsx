@@ -1,3 +1,4 @@
+import PostModal from "dependency/PostModal";
 import * as Style from "./style";
 
 interface CenteredLayoutProps {
@@ -5,7 +6,12 @@ interface CenteredLayoutProps {
 }
 
 const CenteredLayout = ({ children }: CenteredLayoutProps) => {
-  return <Style.CenteredLayout>{children}</Style.CenteredLayout>;
+  return (
+    <Style.CenteredLayout>
+      <PostModal />
+      {children}
+    </Style.CenteredLayout>
+  );
 };
 
 export default CenteredLayout;

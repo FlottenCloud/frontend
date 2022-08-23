@@ -52,20 +52,20 @@ const DashboardItem = ({ used, total, title }: DashboardItemProps) => {
 
   return (
     <Flex
-      width={120}
+      width={80}
       align="center"
       style={{ position: "relative", height: "100%" }}
     >
-      <Typography variant="h6">{title}</Typography>
+      <Typography variant="subtitle2">{title}</Typography>
       <Doughnut options={options} data={data} style={{ marginTop: "10px" }} />
       <Typography
-        variant="h5"
-        style={{ position: "absolute", top: "46%", left: "41%" }}
+        variant="body1"
+        style={{ position: "absolute", top: "44%", left: "41%" }}
       >
         {`${Math.round((used / total) * 100)}%`}
       </Typography>
       <Typography
-        variant="h6"
+        variant="body2"
         style={{ marginTop: "10px" }}
       >{`${used}GB / ${total}GB`}</Typography>
     </Flex>

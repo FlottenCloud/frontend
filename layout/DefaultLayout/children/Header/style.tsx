@@ -5,7 +5,7 @@ export const Header = styled.div`
   width: 100%;
   background-color: ${COLOR.WHITE};
   border-bottom: 2px solid ${COLOR.BORDER};
-  padding: 2rem;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

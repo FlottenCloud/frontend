@@ -5,6 +5,7 @@ import CenteredLayout from "layout/CenteredLayout";
 import { Button, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import useSignin from "hooks/api/auth/useSignin";
+import usePostModal from "hooks/common/usePostModal";
 
 const Signin = () => {
   const signin = useSignin();
@@ -23,9 +24,12 @@ const Signin = () => {
       successCallback: (res) => {
         router.push("/");
         localStorage.setItem("token", res.openstack_user_token);
+        localStorage.setItem("userId", id);
       },
     });
   }, [router, signin, id, password]);
+
+  usePostModal({ mutation: signin });
 
   return (
     <CenteredLayout>

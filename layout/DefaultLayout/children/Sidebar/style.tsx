@@ -23,7 +23,7 @@ export const SideBarItem = styled.div<SideBarItemProps>`
   background-color: ${({ isSelected }) =>
     isSelected ? COLOR.WHITE : COLOR.SIDEBAR};
   border-radius: 4px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.8rem;
   &:hover {
     cursor: pointer;
     background-position: 0;
