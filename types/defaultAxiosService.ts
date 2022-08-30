@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 export interface defaultResponseType {
   code: string;
@@ -11,7 +11,7 @@ export class DefaultAxiosService {
   static readonly instance: AxiosInstance = axios.create({
     withCredentials: true,
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-    timeout: 20000,
+    timeout: 60000,
     headers: {
       "Content-Type": "application/json",
     },
@@ -25,3 +25,20 @@ export class DefaultAxiosService {
     this.instance.defaults.headers.common["X-Auth-Token"] = "";
   }
 }
+
+DefaultAxiosService.instance.interceptors.request.use(
+  function (config: AxiosRequestConfig) {
+    if (
+      !config.headers.common["X-Auth-Token"] &&
+      localStorage.getItem("token")
+    ) {
+      const token = localStorage.getItem("token");
+      config.headers.common["X-Auth-Token"] = token;
+      DefaultAxiosService.addHeaderToken(token);
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);

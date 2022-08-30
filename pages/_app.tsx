@@ -24,7 +24,16 @@ ChartJS.register(
   ChartDataLabels
 );
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      staleTime: 0,
+      cacheTime: 0,
+    },
+  },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

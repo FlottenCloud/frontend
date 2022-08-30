@@ -68,6 +68,7 @@ const Signup = () => {
           variant="outlined"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          type="password"
         />
         <Button variant="contained" onClick={handleSignupClick}>
           Sign up

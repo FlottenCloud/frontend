@@ -5,6 +5,8 @@ import { Button, Typography } from "@mui/material";
 import Image from "next/image";
 import { MENU } from "constants/common/menu";
 import { useCallback, useEffect, useState } from "react";
+import { DefaultAxiosService } from "types/defaultAxiosService";
+import LogoutButton from "@mui/icons-material/Logout";
 
 const Header = () => {
   const router = useRouter();
@@ -13,6 +15,7 @@ const Header = () => {
   const handleSignoutClick = useCallback(() => {
     localStorage.setItem("token", "");
     router.push("/auth/signin");
+    DefaultAxiosService.removeHeaderToken();
   }, [router]);
 
   useEffect(() => {
@@ -30,14 +33,7 @@ const Header = () => {
           onClick={handleSignoutClick}
           variant="contained"
           size="medium"
-          startIcon={
-            <Image
-              src={"/images/sidebar/logout2.png"}
-              alt={"logout"}
-              width={14}
-              height={14}
-            />
-          }
+          startIcon={<LogoutButton />}
         >
           {"Sign out"}
         </Button>
