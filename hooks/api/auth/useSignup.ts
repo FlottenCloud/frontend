@@ -3,7 +3,9 @@ import { DefaultParams } from "types/api/common/params";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 
 export interface SignupParams extends DefaultParams {
-  id: string;
+  first_name: string;
+  last_name: string;
+  user_id: string;
   email: string;
   password: string;
 }
@@ -11,7 +13,9 @@ export interface SignupParams extends DefaultParams {
 const signup = async (params: SignupParams) => {
   const url = `/account/register/`;
   const { data } = await DefaultAxiosService.instance.post(url, {
-    user_id: params.id,
+    first_name: params.first_name,
+    last_name: params.last_name,
+    user_id: params.user_id,
     email: params.email,
     password: params.password,
   });

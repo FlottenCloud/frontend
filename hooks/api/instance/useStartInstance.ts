@@ -4,10 +4,16 @@ import { DefaultAxiosService } from "types/defaultAxiosService";
 
 export interface CreateInstanceParams extends DefaultParams {
   instance_id: string;
+  isCloudStack?: boolean;
 }
 
 const startInstance = async (params: CreateInstanceParams) => {
-  const url = `/openstack/instance-start/`;
+  let url;
+  if (params.isCloudStack) {
+    url = `/cloudstack/instance-start/`;
+  } else {
+    url = `/openstack/instance-start/`;
+  }
   const { data } = await DefaultAxiosService.instance.post(url, {
     instance_id: params.instance_id,
   });

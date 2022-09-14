@@ -27,15 +27,13 @@ const SideBar = () => {
         >{`뜬구름`}</Typography>
       </Flex>
       <Flex gap={16} style={{ width: "100%" }}>
-        {MENU.map((item) => {
+        {MENU.map((item, index) => {
           return (
             <SideBarItem
               key={item.id}
               menu={item}
               title={item.title}
-              icon={item.icon}
-              activeIcon={item.activeIcon}
-              isSelected={router.pathname.includes(item.url)}
+              isSelected={getIndex(router) === index}
             />
           );
         })}
@@ -45,3 +43,21 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+const getIndex = (router) => {
+  if (
+    router.pathname.includes("dashboard") ||
+    router.pathname.includes("clouddash")
+  ) {
+    return 0;
+  }
+  if (
+    router.pathname.includes("instance") ||
+    router.pathname.includes("cloudstack")
+  ) {
+    return 1;
+  }
+  if (router.pathname.includes("profile")) {
+    return 2;
+  }
+};

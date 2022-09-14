@@ -23,22 +23,35 @@ export class DefaultAxiosService {
 
   static removeHeaderToken(): void {
     this.instance.defaults.headers.common["X-Auth-Token"] = "";
+    this.instance.defaults.headers.common["apiKey"] = "";
+    this.instance.defaults.headers.common["secretKey"] = "";
+  }
+
+  static addHeader(key: string, value: string): void {
+    this.instance.defaults.headers.common[key] = value;
   }
 }
 
 DefaultAxiosService.instance.interceptors.request.use(
   function (config: AxiosRequestConfig) {
-    if (
-      !config.headers.common["X-Auth-Token"] &&
-      localStorage.getItem("token")
-    ) {
-      const token = localStorage.getItem("token");
-      config.headers.common["X-Auth-Token"] = token;
-      DefaultAxiosService.addHeaderToken(token);
-    }
+    setToken(config, "X-Auth-Token", "token");
+    setToken(config, "apiKey", "apiKey");
+    setToken(config, "secretKey", "secretKey");
     return config;
   },
   function (error) {
     return Promise.reject(error);
   }
 );
+
+const setToken = (
+  config: AxiosRequestConfig,
+  headerKey: string,
+  storageKey: string
+) => {
+  const value = localStorage.getItem(storageKey);
+  if (!config.headers.common[headerKey] && value) {
+    config.headers.common[headerKey] = value;
+    DefaultAxiosService.addHeader(headerKey, value);
+  }
+};

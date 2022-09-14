@@ -1,7 +1,7 @@
 import Flex from "components/common/Flex";
 import Loading from "components/common/Loading";
 import PostModal from "dependency/PostModal";
-import { useIsFetching } from "react-query";
+import { useIsFetching, useIsMutating } from "react-query";
 import Header from "./children/Header";
 import Pagination from "./children/Pagination";
 import Sidebar from "./children/Sidebar";
@@ -13,7 +13,9 @@ interface DefaultLayoutPorps {
 }
 
 const DefaultLayout = ({ children, pages }: DefaultLayoutPorps) => {
-  const isLoading = useIsFetching() !== 0;
+  const isLoading = useIsFetching() + useIsMutating() !== 0;
+
+  console.log(isLoading);
 
   return (
     <Style.DefaultLayout>

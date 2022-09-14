@@ -11,6 +11,8 @@ const Signup = () => {
   const signup = useSignup();
   const router = useRouter();
   const [id, setId] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -20,21 +22,23 @@ const Signup = () => {
 
   const handleSignupClick = useCallback(() => {
     signup.mutate({
-      id,
+      user_id: id,
+      first_name: firstName,
+      last_name: lastName,
       email,
       password,
       successCallback: () => {
         router.push("/auth/signin");
       },
     });
-  }, [router, signup, id, email, password]);
+  }, [router, firstName, lastName, signup, id, email, password]);
 
   usePostModal({ mutation: signup });
 
   return (
     <CenteredLayout>
       <Flex style={{ marginBottom: "20px" }}>
-        <Typography variant="h4">Team NOVA</Typography>
+        <Typography variant="h4">뜬구름</Typography>
       </Flex>
       <form
         onSubmit={() => {}}
@@ -52,6 +56,22 @@ const Signup = () => {
           size="small"
           value={id}
           onChange={(e) => setId(e.target.value)}
+        />
+        <TextField
+          id="outlined-basic"
+          label="First Name"
+          variant="outlined"
+          size="small"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Last Name"
+          variant="outlined"
+          size="small"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
         />
         <TextField
           id="outlined-basic"

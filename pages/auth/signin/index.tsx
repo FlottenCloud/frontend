@@ -24,6 +24,8 @@ const Signin = () => {
       successCallback: (res) => {
         router.push("/");
         localStorage.setItem("token", res.openstack_user_token);
+        localStorage.setItem("apiKey", res.apiKey);
+        localStorage.setItem("secretKey", res.secretKey);
         localStorage.setItem("userId", id);
       },
     });
@@ -34,7 +36,7 @@ const Signin = () => {
   return (
     <CenteredLayout>
       <Flex style={{ marginBottom: "20px" }}>
-        <Typography variant="h4">Team NOVA</Typography>
+        <Typography variant="h4">뜬구름</Typography>
       </Flex>
       <form
         onSubmit={() => {}}

@@ -19,32 +19,30 @@ export enum OS {
   UBUNTU = "ubuntu",
 }
 
-export interface CreateInstanceParams extends DefaultParams {
+export interface UpdateInstanceParams extends DefaultParams {
   // system_num: number;
-  os: string;
+  instance_id: string;
   package: Array<Packages>;
   num_people: number;
   data_size: number;
-  instance_name: string;
   backup_time: number;
 }
 
-const createInstance = async (params: CreateInstanceParams) => {
+const updateInstance = async (params: UpdateInstanceParams) => {
   const url = `/openstack/`;
-  const { data } = await DefaultAxiosService.instance.post(url, {
-    os: params.os,
+  const { data } = await DefaultAxiosService.instance.put(url, {
+    instance_id: params.instance_id,
     package: params.package,
     num_people: params.num_people,
     data_size: params.data_size,
-    instance_name: params.instance_name,
     backup_time: params.backup_time,
   });
   return data;
 };
 
-const useCreateInstance = () => {
+const useUpdateInstance = () => {
   const queryClient = useQueryClient();
-  return useMutation((params: CreateInstanceParams) => createInstance(params), {
+  return useMutation((params: UpdateInstanceParams) => updateInstance(params), {
     onMutate: (variables) => {},
     onSuccess: (res, variables, context) => {
       queryClient.invalidateQueries("read_instance");
@@ -54,9 +52,8 @@ const useCreateInstance = () => {
     },
     onError: (err, variables, context) => {
       variables.errorCallback && err && variables.errorCallback(err);
-      window.alert(err?.response?.data?.message);
     },
   });
 };
 
-export default useCreateInstance;
+export default useUpdateInstance;

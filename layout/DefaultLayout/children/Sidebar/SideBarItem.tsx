@@ -9,8 +9,6 @@ import { Typography } from "@mui/material";
 interface SideBarProps {
   menu: any;
   title: string;
-  icon: string;
-  activeIcon: string;
   isSelected: boolean;
 }
 

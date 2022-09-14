@@ -1,5 +1,4 @@
 import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material";
-import useCreateInstance from "hooks/api/instance/useCreateInstance";
 import useReadInstance from "hooks/api/instance/useReadInstance";
 import usePostModal from "hooks/common/usePostModal";
 import DefaultLayout from "layout/DefaultLayout";
@@ -12,55 +11,44 @@ import useStopInstance from "hooks/api/instance/useStopInstance";
 import Flex from "components/common/Flex";
 import { useQueryClient } from "react-query";
 import RefreshButton from "@mui/icons-material/Refresh";
-import CreateButton from "@mui/icons-material/Create";
 import ConsoleButton from "@mui/icons-material/Computer";
-import UpdateButton from "@mui/icons-material/Update";
 import useConsoleInstance from "hooks/api/instance/useConsoleInstance";
-import { useRouter } from "next/router";
+import useReadCloudstack from "hooks/api/instance/useReadCloudstack";
 
 const Titles = [
-  { name: "Instance Name", width: "14%" },
+  { name: "Instance Name", width: "20%" },
   { name: "Flavor Name", width: "10%" },
-  { name: "Disk Size", width: "9%" },
+  { name: "Disk Size", width: "10%" },
   { name: "IP Address", width: "10%" },
-  { name: "Ram Size", width: "9%" },
-  { name: "Status", width: "8%" },
+  { name: "Ram Size", width: "10%" },
+  { name: "Status", width: "10%" },
   { name: "Start", width: "10%" },
   { name: "Stop", width: "10%" },
-  { name: "Delete", width: "10%" },
   { name: "Console", width: "10%" },
-  { name: "Update", width: "10%" },
 ] as const;
 
-const Instance = () => {
-  const router = useRouter();
+const Cloudstack = () => {
   const queryClient = useQueryClient();
-  const readInstance = useReadInstance({});
-  const createInstance = useCreateInstance();
+  const readInstance = useReadCloudstack({});
   const startInstance = useStartInstance();
   const stopInstance = useStopInstance();
   const consoleInstance = useConsoleInstance();
   const [load, setLoad] = useState<boolean>(false);
 
-  const handleCreateClick = useCallback(() => {
-    router.push({ pathname: "/instance/create" });
-  }, [router]);
-
   const handleStartClick = useCallback(
     (id: string) => {
-      startInstance.mutate({ instance_id: id });
+      startInstance.mutate({ instance_id: id, isCloudStack: true });
     },
     [startInstance]
   );
 
   const handleStopClick = useCallback(
     (id: string) => {
-      stopInstance.mutate({ instance_id: id });
+      stopInstance.mutate({ instance_id: id, isCloudStack: true });
     },
     [stopInstance]
   );
 
-  usePostModal({ mutation: createInstance });
   usePostModal({ mutation: startInstance });
   usePostModal({ mutation: stopInstance });
 
@@ -76,17 +64,11 @@ const Instance = () => {
     (id: string) => {
       consoleInstance.mutate({
         instance_id: id,
+        isCloudStack: true,
         successCallback: (res) => window.open(res.instance_url),
       });
     },
     [consoleInstance]
-  );
-
-  const handleUpdateClick = useCallback(
-    (id: string) => {
-      router.push({ pathname: `/instance/update/${id}` });
-    },
-    [router]
   );
 
   return (
@@ -100,13 +82,6 @@ const Instance = () => {
               startIcon={<RefreshButton />}
             >
               {"새로고침"}
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleCreateClick}
-              startIcon={<CreateButton />}
-            >
-              {"인스턴스 생성"}
             </Button>
           </Flex>
           <Table>
@@ -151,9 +126,6 @@ const Instance = () => {
                   </Button>
                 </TableCell>
                 <TableCell align="center">
-                  <DeleteButton id={item.instance_id} />
-                </TableCell>
-                <TableCell align="center">
                   <Button
                     variant="contained"
                     onClick={() => handleConsoleClick(item.instance_id)}
@@ -162,17 +134,6 @@ const Instance = () => {
                     color="secondary"
                   >
                     Console
-                  </Button>
-                </TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="contained"
-                    onClick={() => handleUpdateClick(item.instance_id)}
-                    startIcon={<UpdateButton />}
-                    size="small"
-                    color="inherit"
-                  >
-                    Update
                   </Button>
                 </TableCell>
               </TableRow>
@@ -184,4 +145,4 @@ const Instance = () => {
   );
 };
 
-export default Instance;
+export default Cloudstack;

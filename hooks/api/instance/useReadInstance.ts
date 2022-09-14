@@ -3,6 +3,7 @@ import { QueryResult } from "types/api/common/response";
 import { useQuery } from "react-query";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 import { ReadInstanceResponse } from "types/api/instance/readInstance";
+import { useRouter } from "next/router";
 
 export interface ReadDashParams extends DefaultParams {}
 
@@ -15,6 +16,7 @@ const readInstance = async (params: ReadDashParams) => {
 const useReadInstance = (
   params: ReadDashParams
 ): QueryResult<ReadInstanceResponse> => {
+  const router = useRouter();
   const { successCallback, errorCallback, enabled } = params;
   const response = useQuery(
     ["read_instance", params],
@@ -25,10 +27,11 @@ const useReadInstance = (
       },
       onError: (err) => {
         errorCallback && err && errorCallback(err);
+        router.push({ pathname: "/cloudstack" });
       },
       enabled,
-      staleTime: Infinity,
-      cacheTime: Infinity,
+      staleTime: 0,
+      cacheTime: 0,
     }
   );
   return response;

@@ -14,6 +14,8 @@ const Header = () => {
 
   const handleSignoutClick = useCallback(() => {
     localStorage.setItem("token", "");
+    localStorage.setItem("apiKey", "");
+    localStorage.setItem("secretKey", "");
     router.push("/auth/signin");
     DefaultAxiosService.removeHeaderToken();
   }, [router]);
@@ -24,9 +26,7 @@ const Header = () => {
 
   return (
     <Style.Header>
-      <Typography variant="subtitle1">
-        {MENU.find((item) => router.pathname.includes(item.url))?.title}
-      </Typography>
+      <Typography variant="subtitle1">{getTitle(router)}</Typography>
       <Flex row align="center" gap={10}>
         <Typography variant="subtitle1">{`login user : ${userId}`}</Typography>
         <Button
@@ -43,3 +43,21 @@ const Header = () => {
 };
 
 export default Header;
+
+const getTitle = (router) => {
+  if (
+    router.pathname.includes("instance") ||
+    router.pathname.includes("cloudstack")
+  ) {
+    return "INSTANCE";
+  }
+  if (
+    router.pathname.includes("dashboard") ||
+    router.pathname.includes("clouddash")
+  ) {
+    return "DASHBOARD";
+  }
+  if (router.pathname.includes("profile")) {
+    return "PROFILE";
+  }
+};

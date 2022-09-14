@@ -20,11 +20,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import useUpdateInstance, {
+  UpdateInstanceParams,
+} from "hooks/api/instance/useUpdateInstance";
+import { useRouter } from "next/router";
 
 const InstanceCreate = () => {
-  const createInstance = useCreateInstance();
-  const [os, setOs] = useState<string>(OS.FEDORA);
-  const [name, setName] = useState<string>("");
+  const router = useRouter();
+  const updateInstance = useUpdateInstance();
   const [numPeople, setNumPeople] = useState<number>(0);
   const [dataSize, setDataSize] = useState<number>(0);
   const [backupTimes, setBackupTimes] = useState<number>(6);
@@ -33,17 +36,23 @@ const InstanceCreate = () => {
   const handleCreateClick = useCallback(
     (e: any) => {
       e.preventDefault();
-      const createParams: CreateInstanceParams = {
-        os,
-        instance_name: name,
+      const updateParams: UpdateInstanceParams = {
+        instance_id: `${router?.query?.id}`,
         num_people: numPeople,
         data_size: dataSize,
         backup_time: backupTimes,
         package: packages,
       };
-      createInstance.mutate(createParams);
+      updateInstance.mutate(updateParams);
     },
-    [backupTimes, createInstance, dataSize, name, numPeople, os, packages]
+    [
+      router?.query?.id,
+      numPeople,
+      dataSize,
+      backupTimes,
+      packages,
+      updateInstance,
+    ]
   );
 
   return (
@@ -60,32 +69,6 @@ const InstanceCreate = () => {
           width: "300px",
         }}
       >
-        <FormControl>
-          <InputLabel id="OS">OS</InputLabel>
-          <Select
-            labelId="OS"
-            id="OS"
-            value={os}
-            label="OS"
-            onChange={(e) => setOs(e.target.value)}
-          >
-            {Object.values(OS).map((item, index) => (
-              <MenuItem value={item} key={index}>
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <TextField
-          label="Instance Name"
-          variant="outlined"
-          value={name}
-          onChange={(e) => {
-            const value = e.target.value;
-            const newValue = value.replace("_", "");
-            setName(newValue);
-          }}
-        />
         <TextField
           label="Number of People"
           variant="outlined"
