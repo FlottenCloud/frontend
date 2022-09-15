@@ -3,7 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDeleteInstanceOpen } from "hooks/api/instance/useDeleteInstance";
 
 interface DeleteButtonProps {
-  id: string;
+  id: number;
 }
 
 const DeleteButton = ({ id }: DeleteButtonProps) => {

@@ -36,15 +36,15 @@ const Cloudstack = () => {
   const [load, setLoad] = useState<boolean>(false);
 
   const handleStartClick = useCallback(
-    (id: string) => {
-      startInstance.mutate({ instance_id: id, isCloudStack: true });
+    (id: number) => {
+      startInstance.mutate({ instance_pk: id, isCloudStack: true });
     },
     [startInstance]
   );
 
   const handleStopClick = useCallback(
-    (id: string) => {
-      stopInstance.mutate({ instance_id: id, isCloudStack: true });
+    (id: number) => {
+      stopInstance.mutate({ instance_pk: id, isCloudStack: true });
     },
     [stopInstance]
   );
@@ -61,9 +61,9 @@ const Cloudstack = () => {
   }, [queryClient]);
 
   const handleConsoleClick = useCallback(
-    (id: string) => {
+    (id: number) => {
       consoleInstance.mutate({
-        instance_id: id,
+        instance_pk: id,
         isCloudStack: true,
         successCallback: (res) => window.open(res.instance_url),
       });

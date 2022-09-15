@@ -11,7 +11,7 @@ export interface SignupParams extends DefaultParams {
 }
 
 const signup = async (params: SignupParams) => {
-  const url = `/account/register/`;
+  const url = `/account/`;
   const { data } = await DefaultAxiosService.instance.post(url, {
     first_name: params.first_name,
     last_name: params.last_name,

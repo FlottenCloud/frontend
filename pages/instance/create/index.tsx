@@ -20,6 +20,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import usePostModal from "hooks/common/usePostModal";
 
 const InstanceCreate = () => {
   const createInstance = useCreateInstance();
@@ -45,6 +46,8 @@ const InstanceCreate = () => {
     },
     [backupTimes, createInstance, dataSize, name, numPeople, os, packages]
   );
+
+  usePostModal({ mutation: createInstance });
 
   return (
     <DefaultLayout>

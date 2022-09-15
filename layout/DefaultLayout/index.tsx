@@ -13,7 +13,7 @@ interface DefaultLayoutPorps {
 }
 
 const DefaultLayout = ({ children, pages }: DefaultLayoutPorps) => {
-  const isLoading = useIsFetching() + useIsMutating() !== 0;
+  const isLoading = useIsFetching() !== 0;
 
   console.log(isLoading);
 

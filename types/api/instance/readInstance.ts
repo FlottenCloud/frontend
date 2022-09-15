@@ -3,6 +3,7 @@ export interface ReadInstanceResponse {
 }
 
 export interface Instance {
+  instance_pk: number;
   disk_size: number;
   flavor_name: string;
   instance_name: string;

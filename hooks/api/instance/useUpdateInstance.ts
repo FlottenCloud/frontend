@@ -21,8 +21,8 @@ export enum OS {
 
 export interface UpdateInstanceParams extends DefaultParams {
   // system_num: number;
-  instance_id: string;
-  package: Array<Packages>;
+  instance_pk: number;
+  package: Array<string>;
   num_people: number;
   data_size: number;
   backup_time: number;
@@ -30,8 +30,8 @@ export interface UpdateInstanceParams extends DefaultParams {
 
 const updateInstance = async (params: UpdateInstanceParams) => {
   const url = `/openstack/`;
-  const { data } = await DefaultAxiosService.instance.put(url, {
-    instance_id: params.instance_id,
+  const { data } = await DefaultAxiosService.instance.patch(url, {
+    instance_pk: params.instance_pk,
     package: params.package,
     num_people: params.num_people,
     data_size: params.data_size,

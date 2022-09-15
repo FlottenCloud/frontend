@@ -4,15 +4,15 @@ import { DefaultParams } from "types/api/common/params";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 import usePostModal from "hooks/common/usePostModal";
 
-export interface CreateInstanceParams extends DefaultParams {
-  instance_id: string;
+export interface DeleteInstanceParams extends DefaultParams {
+  instance_pk: number;
 }
 
-const deleteInstance = async (params: CreateInstanceParams) => {
+const deleteInstance = async (params: DeleteInstanceParams) => {
   const url = `/openstack/`;
   const { data } = await DefaultAxiosService.instance.delete(url, {
     data: {
-      instance_id: params.instance_id,
+      instance_pk: params.instance_pk,
     },
   });
   return data;
@@ -20,7 +20,7 @@ const deleteInstance = async (params: CreateInstanceParams) => {
 
 const useDeleteInstance = () => {
   const queryClient = useQueryClient();
-  return useMutation((params: CreateInstanceParams) => deleteInstance(params), {
+  return useMutation((params: DeleteInstanceParams) => deleteInstance(params), {
     onMutate: (variables) => {},
     onSuccess: (res, variables, context) => {
       queryClient.invalidateQueries("read_instance");
@@ -35,11 +35,11 @@ const useDeleteInstance = () => {
 
 export default useDeleteInstance;
 
-export const useDeleteInstanceOpen = (id: string) => {
+export const useDeleteInstanceOpen = (id: number) => {
   const deleteInstance = useDeleteInstance();
 
   const handleAgree = useCallback(() => {
-    deleteInstance.mutate({ instance_id: id });
+    deleteInstance.mutate({ instance_pk: id });
   }, [deleteInstance, id]);
 
   const handleOpen = useCallback(() => {

@@ -2,27 +2,27 @@ import { useMutation, useQueryClient } from "react-query";
 import { DefaultParams } from "types/api/common/params";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 
-export interface CreateInstanceParams extends DefaultParams {
-  instance_id: string;
+export interface ConsoleInstanceParams extends DefaultParams {
+  instance_pk: number;
   isCloudStack?: boolean;
 }
 
-const consoleInstance = async (params: CreateInstanceParams) => {
+const consoleInstance = async (params: ConsoleInstanceParams) => {
   let url;
   if (params.isCloudStack) {
     url = `/cloudstack/instance-console/`;
   } else {
-    url = `/openstack/instance-stoconsolep/`;
+    url = `/openstack/instance-console/`;
   }
   const { data } = await DefaultAxiosService.instance.post(url, {
-    instance_id: params.instance_id,
+    instance_pk: params.instance_pk,
   });
   return data;
 };
 
 const useConsoleInstance = () => {
   return useMutation(
-    (params: CreateInstanceParams) => consoleInstance(params),
+    (params: ConsoleInstanceParams) => consoleInstance(params),
     {
       onMutate: (variables) => {},
       onSuccess: (res, variables, context) => {

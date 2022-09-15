@@ -2,25 +2,23 @@ import { DefaultParams } from "types/api/common/params";
 import { QueryResult } from "types/api/common/response";
 import { useQuery } from "react-query";
 import { DefaultAxiosService } from "types/defaultAxiosService";
-import { ReadLicenseSummaryResponse } from "types/api/license/readLicenseSummary";
+import { ReadProfileResponse } from "types/api/auth/readProfile";
 
-export interface ReadLicenseSummaryParams extends DefaultParams {
-  user_sub: string;
-}
+export interface ReadProfileParams extends DefaultParams {}
 
-const readUserSummary = async () => {
-  const url = `/user/summary/`;
+const readProfile = async (params: ReadProfileParams) => {
+  const url = `/account/`;
   const { data } = await DefaultAxiosService.instance.get(url);
   return data;
 };
 
-const useReadUserSummary = (
-  params: ReadLicenseSummaryParams,
-): QueryResult<ReadLicenseSummaryResponse> => {
+const useReadProfile = (
+  params: ReadProfileParams
+): QueryResult<ReadProfileResponse> => {
   const { successCallback, errorCallback, enabled } = params;
   const response = useQuery(
-    ["read_uesr_summary", params],
-    async () => validate(params.user_sub) && readUserSummary(),
+    ["read_profile", params],
+    async () => readProfile(params),
     {
       onSuccess: (res) => {
         successCallback && res && successCallback(res);
@@ -29,13 +27,11 @@ const useReadUserSummary = (
         errorCallback && err && errorCallback(err);
       },
       enabled,
-    },
+      staleTime: 0,
+      cacheTime: 0,
+    }
   );
   return response;
 };
 
-export default useReadUserSummary;
-
-const validate = (uesr_sub: string): boolean => {
-  return uesr_sub !== undefined && uesr_sub !== "";
-};
+export default useReadProfile;

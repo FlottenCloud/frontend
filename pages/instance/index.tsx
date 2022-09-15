@@ -47,15 +47,15 @@ const Instance = () => {
   }, [router]);
 
   const handleStartClick = useCallback(
-    (id: string) => {
-      startInstance.mutate({ instance_id: id });
+    (id: number) => {
+      startInstance.mutate({ instance_pk: id });
     },
     [startInstance]
   );
 
   const handleStopClick = useCallback(
-    (id: string) => {
-      stopInstance.mutate({ instance_id: id });
+    (id: number) => {
+      stopInstance.mutate({ instance_pk: id });
     },
     [stopInstance]
   );
@@ -73,9 +73,9 @@ const Instance = () => {
   }, [queryClient]);
 
   const handleConsoleClick = useCallback(
-    (id: string) => {
+    (id: number) => {
       consoleInstance.mutate({
-        instance_id: id,
+        instance_pk: id,
         successCallback: (res) => window.open(res.instance_url),
       });
     },
@@ -83,7 +83,7 @@ const Instance = () => {
   );
 
   const handleUpdateClick = useCallback(
-    (id: string) => {
+    (id: number) => {
       router.push({ pathname: `/instance/update/${id}` });
     },
     [router]
@@ -132,7 +132,7 @@ const Instance = () => {
                 <TableCell align="center">
                   <Button
                     variant="outlined"
-                    onClick={() => handleStartClick(item.instance_id)}
+                    onClick={() => handleStartClick(item.instance_pk)}
                     startIcon={<StartIcon />}
                     size="small"
                   >
@@ -142,7 +142,7 @@ const Instance = () => {
                 <TableCell align="center">
                   <Button
                     variant="outlined"
-                    onClick={() => handleStopClick(item.instance_id)}
+                    onClick={() => handleStopClick(item.instance_pk)}
                     startIcon={<StopIcon />}
                     size="small"
                     color="error"
@@ -151,12 +151,12 @@ const Instance = () => {
                   </Button>
                 </TableCell>
                 <TableCell align="center">
-                  <DeleteButton id={item.instance_id} />
+                  <DeleteButton id={item.instance_pk} />
                 </TableCell>
                 <TableCell align="center">
                   <Button
                     variant="contained"
-                    onClick={() => handleConsoleClick(item.instance_id)}
+                    onClick={() => handleConsoleClick(item.instance_pk)}
                     startIcon={<ConsoleButton />}
                     size="small"
                     color="secondary"
@@ -167,7 +167,7 @@ const Instance = () => {
                 <TableCell align="center">
                   <Button
                     variant="contained"
-                    onClick={() => handleUpdateClick(item.instance_id)}
+                    onClick={() => handleUpdateClick(item.instance_pk)}
                     startIcon={<UpdateButton />}
                     size="small"
                     color="inherit"

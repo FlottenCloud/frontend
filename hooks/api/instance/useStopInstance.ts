@@ -3,7 +3,7 @@ import { DefaultParams } from "types/api/common/params";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 
 export interface CreateInstanceParams extends DefaultParams {
-  instance_id: string;
+  instance_pk: number;
   isCloudStack?: boolean;
 }
 
@@ -15,7 +15,7 @@ const stopInstance = async (params: CreateInstanceParams) => {
     url = `/openstack/instance-stop/`;
   }
   const { data } = await DefaultAxiosService.instance.post(url, {
-    instance_id: params.instance_id,
+    instance_pk: params.instance_pk,
   });
   return data;
 };

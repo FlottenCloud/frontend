@@ -1,9 +1,5 @@
 import Flex from "components/common/Flex";
-import useCreateInstance, {
-  CreateInstanceParams,
-  OS,
-  Packages,
-} from "hooks/api/instance/useCreateInstance";
+import { Packages } from "hooks/api/instance/useCreateInstance";
 import { useCallback, useState } from "react";
 import _ from "lodash-es";
 import DefaultLayout from "layout/DefaultLayout";
@@ -24,6 +20,9 @@ import useUpdateInstance, {
   UpdateInstanceParams,
 } from "hooks/api/instance/useUpdateInstance";
 import { useRouter } from "next/router";
+import useReadOneInstance from "hooks/api/instance/useReadOneInstance";
+import { ReadOneInstanceResponse } from "types/api/instance/readOneInstance";
+import usePostModal from "hooks/common/usePostModal";
 
 const InstanceCreate = () => {
   const router = useRouter();
@@ -31,13 +30,30 @@ const InstanceCreate = () => {
   const [numPeople, setNumPeople] = useState<number>(0);
   const [dataSize, setDataSize] = useState<number>(0);
   const [backupTimes, setBackupTimes] = useState<number>(6);
-  const [packages, setPackages] = useState<Array<Packages>>([]);
+  const [packages, setPackages] = useState<Array<string>>([]);
+  const [disabled, setDisalbed] = useState<Array<string>>([]);
+
+  usePostModal({ mutation: updateInstance });
+
+  useReadOneInstance({
+    instance_pk: +router?.query.id,
+    successCallback: (res: ReadOneInstanceResponse) => {
+      if (res.package !== "") {
+        const array = res.package.split(",");
+        setPackages(array);
+        setDisalbed(array);
+      }
+      setNumPeople(+res.num_people);
+      setDataSize(+res.expected_data_size);
+      setBackupTimes(res.backup_time);
+    },
+  });
 
   const handleCreateClick = useCallback(
     (e: any) => {
       e.preventDefault();
       const updateParams: UpdateInstanceParams = {
-        instance_id: `${router?.query?.id}`,
+        instance_pk: +router?.query?.id,
         num_people: numPeople,
         data_size: dataSize,
         backup_time: backupTimes,
@@ -58,7 +74,7 @@ const InstanceCreate = () => {
   return (
     <DefaultLayout>
       <Flex style={{ marginBottom: "20px" }}>
-        <Typography variant="h4">Create Instance</Typography>
+        <Typography variant="h4">Update Instance</Typography>
       </Flex>
       <FormControl
         onSubmit={() => {}}
@@ -110,6 +126,7 @@ const InstanceCreate = () => {
                 label={item}
                 sx={{ width: "40%" }}
                 checked={packages.some((e) => e === item)}
+                disabled={disabled.some((e) => e === item)}
                 onChange={(e) => {
                   let newPackages = [...packages];
                   if (packages.some((p) => p === item)) {
@@ -124,7 +141,7 @@ const InstanceCreate = () => {
           </FormGroup>
         </Box>
         <Button variant="contained" onClick={handleCreateClick}>
-          Create Instance
+          Update Instance
         </Button>
       </FormControl>
     </DefaultLayout>
