@@ -9,9 +9,10 @@ interface DashboardItemProps {
   used: number;
   total: number;
   title: string;
+  unit?: string;
 }
 
-const DashboardItem = ({ used, total, title }: DashboardItemProps) => {
+const DashboardItem = ({ used, total, title, unit }: DashboardItemProps) => {
   // const [result, setResult] = useState<Array<any>>([]);
   // const [total, setTotal] = useState<number>(0);
 
@@ -64,10 +65,9 @@ const DashboardItem = ({ used, total, title }: DashboardItemProps) => {
       >
         {`${Math.round((used / total) * 100)}%`}
       </Typography>
-      <Typography
-        variant="body2"
-        style={{ marginTop: "10px" }}
-      >{`${used}GB / ${total}GB`}</Typography>
+      <Typography variant="body2" style={{ marginTop: "10px" }}>{`${used}${
+        unit ?? "GB"
+      } / ${total}${unit ?? "GB"}`}</Typography>
     </Flex>
   );
 };

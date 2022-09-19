@@ -21,8 +21,10 @@ import {
   Typography,
 } from "@mui/material";
 import usePostModal from "hooks/common/usePostModal";
+import { useRouter } from "next/router";
 
 const InstanceCreate = () => {
+  const router = useRouter();
   const createInstance = useCreateInstance();
   const [os, setOs] = useState<string>(OS.FEDORA);
   const [name, setName] = useState<string>("");
@@ -41,10 +43,20 @@ const InstanceCreate = () => {
         data_size: dataSize,
         backup_time: backupTimes,
         package: packages,
+        successCallback: () => router.push({ pathname: "/instance" }),
       };
       createInstance.mutate(createParams);
     },
-    [backupTimes, createInstance, dataSize, name, numPeople, os, packages]
+    [
+      backupTimes,
+      createInstance,
+      dataSize,
+      name,
+      numPeople,
+      os,
+      packages,
+      router,
+    ]
   );
 
   usePostModal({ mutation: createInstance });

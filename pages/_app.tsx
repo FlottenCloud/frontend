@@ -12,6 +12,9 @@ import {
   ArcElement,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import axios from "axios";
+import { DefaultAxiosService } from "types/defaultAxiosService";
+import { useEffect } from "react";
 
 ChartJS.register(
   ArcElement,

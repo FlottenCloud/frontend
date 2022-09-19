@@ -11,7 +11,7 @@ export class DefaultAxiosService {
   static readonly instance: AxiosInstance = axios.create({
     withCredentials: true,
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-    timeout: 60000,
+    timeout: 300000,
     headers: {
       "Content-Type": "application/json",
     },

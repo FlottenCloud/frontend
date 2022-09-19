@@ -58,17 +58,11 @@ const InstanceCreate = () => {
         data_size: dataSize,
         backup_time: backupTimes,
         package: packages,
+        successCallback: () => router.push({ pathname: "/instance" }),
       };
       updateInstance.mutate(updateParams);
     },
-    [
-      router?.query?.id,
-      numPeople,
-      dataSize,
-      backupTimes,
-      packages,
-      updateInstance,
-    ]
+    [router, numPeople, dataSize, backupTimes, packages, updateInstance]
   );
 
   return (

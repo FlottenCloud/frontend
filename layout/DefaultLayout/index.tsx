@@ -15,8 +15,6 @@ interface DefaultLayoutPorps {
 const DefaultLayout = ({ children, pages }: DefaultLayoutPorps) => {
   const isLoading = useIsFetching() !== 0;
 
-  console.log(isLoading);
-
   return (
     <Style.DefaultLayout>
       <Sidebar />

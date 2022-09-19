@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 import { ReadInstanceResponse } from "types/api/instance/readInstance";
 import { useRouter } from "next/router";
+import useStatusStore from "store/common/server";
 
 export interface ReadDashParams extends DefaultParams {}
 
@@ -17,6 +18,7 @@ const useReadInstance = (
   params: ReadDashParams
 ): QueryResult<ReadInstanceResponse> => {
   const router = useRouter();
+  const statusStore = useStatusStore();
   const { successCallback, errorCallback, enabled } = params;
   const response = useQuery(
     ["read_instance", params],
@@ -24,10 +26,18 @@ const useReadInstance = (
     {
       onSuccess: (res) => {
         successCallback && res && successCallback(res);
+        if (statusStore.getStatus() === "cloudstack") {
+          window.alert("오픈스택 서버가 복구되었습니다.");
+        }
+        statusStore.setStatus("openstack");
       },
       onError: (err) => {
         errorCallback && err && errorCallback(err);
+        window.alert(
+          "오픈스택 서버에 문제가 생겨 클라우드 스택 서버로 전환합니다."
+        );
         router.push({ pathname: "/cloudstack" });
+        statusStore.setStatus("cloudstack");
       },
       enabled,
       staleTime: 0,

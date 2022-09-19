@@ -1,11 +1,17 @@
-import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material";
-import useReadInstance from "hooks/api/instance/useReadInstance";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import usePostModal from "hooks/common/usePostModal";
 import DefaultLayout from "layout/DefaultLayout";
 import { useCallback, useEffect, useState } from "react";
 import StartIcon from "@mui/icons-material/Start";
 import StopIcon from "@mui/icons-material/Stop";
-import DeleteButton from "components/instance/DeleteButton";
 import useStartInstance from "hooks/api/instance/useStartInstance";
 import useStopInstance from "hooks/api/instance/useStopInstance";
 import Flex from "components/common/Flex";
@@ -75,7 +81,8 @@ const Cloudstack = () => {
     <DefaultLayout>
       {load && (
         <>
-          <Flex row justify="flex-end" gap={10}>
+          <Flex row justify="space-between">
+            <Typography variant="h4">Cloudstack Instances</Typography>
             <Button
               variant="outlined"
               onClick={handleRefreshClick}
@@ -86,58 +93,62 @@ const Cloudstack = () => {
           </Flex>
           <Table>
             <TableHead>
-              {Titles.map((item, index) => (
-                <TableCell
-                  key={index}
-                  align="center"
-                  style={{ width: item.width }}
-                >
-                  {item.name}
-                </TableCell>
-              ))}
-            </TableHead>
-            {readInstance?.data?.instances.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.instance_name}</TableCell>
-                <TableCell align="center">{item.flavor_name}</TableCell>
-                <TableCell align="right">{`${item.disk_size}GB`}</TableCell>
-                <TableCell align="center">{item.ip_address}</TableCell>
-                <TableCell align="right">{`${item.ram_size}GB`}</TableCell>
-                <TableCell align="center">{item.status}</TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="outlined"
-                    onClick={() => handleStartClick(item.instance_id)}
-                    startIcon={<StartIcon />}
-                    size="small"
+              <TableRow>
+                {Titles.map((item, index) => (
+                  <TableCell
+                    key={index}
+                    align="center"
+                    style={{ width: item.width }}
                   >
-                    Start
-                  </Button>
-                </TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="outlined"
-                    onClick={() => handleStopClick(item.instance_id)}
-                    startIcon={<StopIcon />}
-                    size="small"
-                    color="error"
-                  >
-                    Stop
-                  </Button>
-                </TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="contained"
-                    onClick={() => handleConsoleClick(item.instance_id)}
-                    startIcon={<ConsoleButton />}
-                    size="small"
-                    color="secondary"
-                  >
-                    Console
-                  </Button>
-                </TableCell>
+                    {item.name}
+                  </TableCell>
+                ))}
               </TableRow>
-            ))}
+            </TableHead>
+            <TableBody>
+              {readInstance?.data?.instances.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.instance_name}</TableCell>
+                  <TableCell align="center">{item.flavor_name}</TableCell>
+                  <TableCell align="right">{`${item.disk_size}GB`}</TableCell>
+                  <TableCell align="center">{item.ip_address}</TableCell>
+                  <TableCell align="right">{`${item.ram_size}GB`}</TableCell>
+                  <TableCell align="center">{item.status}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleStartClick(item.instance_pk)}
+                      startIcon={<StartIcon />}
+                      size="small"
+                    >
+                      Start
+                    </Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleStopClick(item.instance_pk)}
+                      startIcon={<StopIcon />}
+                      size="small"
+                      color="error"
+                    >
+                      Stop
+                    </Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      onClick={() => handleConsoleClick(item.instance_pk)}
+                      startIcon={<ConsoleButton />}
+                      size="small"
+                      color="secondary"
+                    >
+                      Console
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </>
       )}
