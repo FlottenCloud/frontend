@@ -1,5 +1,7 @@
 import {
   Button,
+  IconButton,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -20,17 +22,20 @@ import RefreshButton from "@mui/icons-material/Refresh";
 import ConsoleButton from "@mui/icons-material/Computer";
 import useConsoleInstance from "hooks/api/instance/useConsoleInstance";
 import useReadCloudstack from "hooks/api/instance/useReadCloudstack";
+import TableStyledRow from "components/common/TableStyledRow";
+import DownIcon from "@mui/icons-material/ArrowDropDown";
+import UpIcon from "@mui/icons-material/ArrowDropUp";
+import { useRouter } from "next/router";
+import _ from "lodash-es";
 
 const Titles = [
-  { name: "Instance Name", width: "20%" },
-  { name: "Flavor Name", width: "10%" },
+  { name: "Instance Name", width: "30%" },
+  { name: "Flavor Name", width: "15%" },
   { name: "Disk Size", width: "10%" },
-  { name: "IP Address", width: "10%" },
+  { name: "IP Address", width: "15%" },
   { name: "Ram Size", width: "10%" },
   { name: "Status", width: "10%" },
-  { name: "Start", width: "10%" },
-  { name: "Stop", width: "10%" },
-  { name: "Console", width: "10%" },
+  { name: "Actions", width: "10%" },
 ] as const;
 
 const Cloudstack = () => {
@@ -40,6 +45,8 @@ const Cloudstack = () => {
   const stopInstance = useStopInstance();
   const consoleInstance = useConsoleInstance();
   const [load, setLoad] = useState<boolean>(false);
+  const router = useRouter();
+  const [show, setShow] = useState<Array<number>>([]);
 
   const handleStartClick = useCallback(
     (id: number) => {
@@ -106,48 +113,123 @@ const Cloudstack = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {readInstance?.data?.instances.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{item.instance_name}</TableCell>
-                  <TableCell align="center">{item.flavor_name}</TableCell>
-                  <TableCell align="right">{`${item.disk_size}GB`}</TableCell>
-                  <TableCell align="center">{item.ip_address}</TableCell>
-                  <TableCell align="right">{`${item.ram_size}GB`}</TableCell>
-                  <TableCell align="center">{item.status}</TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleStartClick(item.instance_pk)}
-                      startIcon={<StartIcon />}
-                      size="small"
+              {readInstance?.data?.instances.map((item, index) => {
+                const isShow = show.some((e) => e === item.instance_pk);
+                const tableCellStyle = isShow
+                  ? {
+                      borderBottom: "none",
+                      padding: "10px",
+                    }
+                  : {
+                      padding: "10px",
+                    };
+                return (
+                  <>
+                    <TableRow
+                      key={index}
+                      sx={{
+                        zIndex: 999999,
+                        position: "sticky",
+                        backgroundColor: "white",
+                      }}
                     >
-                      Start
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleStopClick(item.instance_pk)}
-                      startIcon={<StopIcon />}
-                      size="small"
-                      color="error"
-                    >
-                      Stop
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      onClick={() => handleConsoleClick(item.instance_pk)}
-                      startIcon={<ConsoleButton />}
-                      size="small"
-                      color="secondary"
-                    >
-                      Console
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      <TabelStyledCell
+                        align="center"
+                        onClick={() => {
+                          router.push({
+                            pathname: `/cloudstack/${item.instance_pk}`,
+                          });
+                        }}
+                        sx={tableCellStyle}
+                      >
+                        {item.instance_name}
+                      </TabelStyledCell>
+                      <TableCell align="center" sx={tableCellStyle}>
+                        {item.flavor_name}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={tableCellStyle}
+                      >{`${item.disk_size}GB`}</TableCell>
+                      <TableCell align="center" sx={tableCellStyle}>
+                        {item.ip_address}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={tableCellStyle}
+                      >{`${item.ram_size}GB`}</TableCell>
+                      <TableCell align="center" sx={tableCellStyle}>
+                        {item.status}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={tableCellStyle}
+                        onClick={() => {
+                          let newShow = [...show];
+                          if (show.some((p) => p === item.instance_pk)) {
+                            newShow = _.remove(
+                              newShow,
+                              (n) => n !== item.instance_pk
+                            );
+                          } else {
+                            newShow.push(item.instance_pk);
+                          }
+                          setShow(newShow);
+                        }}
+                      >
+                        <IconButton>
+                          {show.some((e) => e === item.instance_pk) ? (
+                            <UpIcon />
+                          ) : (
+                            <DownIcon />
+                          )}
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                    {show.some((e) => e === item.instance_pk) && (
+                      <TableStyledRow>
+                        <TableCell
+                          colSpan={11}
+                          sx={{
+                            textAlign: "right",
+                            padding: "0 0 8px 0",
+                          }}
+                        >
+                          <Button
+                            variant="outlined"
+                            onClick={() => handleStartClick(item.instance_pk)}
+                            startIcon={<StartIcon />}
+                            size="small"
+                            sx={{ marginRight: "8px" }}
+                          >
+                            Start
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            onClick={() => handleStopClick(item.instance_pk)}
+                            startIcon={<StopIcon />}
+                            size="small"
+                            color="error"
+                            sx={{ marginRight: "8px" }}
+                          >
+                            Stop
+                          </Button>
+                          <Button
+                            variant="contained"
+                            onClick={() => handleConsoleClick(item.instance_pk)}
+                            startIcon={<ConsoleButton />}
+                            size="small"
+                            color="secondary"
+                            sx={{ marginRight: "8px" }}
+                          >
+                            Console
+                          </Button>
+                        </TableCell>
+                      </TableStyledRow>
+                    )}
+                  </>
+                );
+              })}
             </TableBody>
           </Table>
         </>
@@ -157,3 +239,10 @@ const Cloudstack = () => {
 };
 
 export default Cloudstack;
+
+const TabelStyledCell = styled(TableCell)`
+  cursor: pointer;
+  &:hover {
+    color: blue;
+  }
+`;

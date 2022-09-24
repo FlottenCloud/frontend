@@ -9,20 +9,20 @@ export interface ReadDashParams extends DefaultParams {
   instance_pk: number;
 }
 
-const readOneInstance = async (params: ReadDashParams) => {
-  const url = `/openstack/${params.instance_pk}/`;
+const readOneCloudstack = async (params: ReadDashParams) => {
+  const url = `/cloudstack/${params.instance_pk}/`;
   const { data } = await DefaultAxiosService.instance.get(url);
   return data;
 };
 
-const useReadOneInstance = (
+const useReadOneCloudstack = (
   params: ReadDashParams
 ): QueryResult<ReadOneInstanceResponse> => {
   const router = useRouter();
   const { successCallback, errorCallback, enabled } = params;
   const response = useQuery(
-    ["read_one_instance", params],
-    async () => validate(params.instance_pk) && readOneInstance(params),
+    ["read_one_cloudstack", params],
+    async () => validate(params.instance_pk) && readOneCloudstack(params),
     {
       onSuccess: (res) => {
         successCallback && res && successCallback(res);
@@ -38,7 +38,7 @@ const useReadOneInstance = (
   return response;
 };
 
-export default useReadOneInstance;
+export default useReadOneCloudstack;
 
 const validate = (id: number) => {
   return id > 0;

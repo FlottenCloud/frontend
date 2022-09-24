@@ -16,4 +16,7 @@ export interface Instance {
   stack_id: string;
   stack_name: string;
   user_id_id: string;
+  backup_completed_time: string;
+  backup_time: number;
+  next_backup_time: string;
 }

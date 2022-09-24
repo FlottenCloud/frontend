@@ -15,6 +15,7 @@ const DeleteButton = ({ id }: DeleteButtonProps) => {
       startIcon={<DeleteIcon />}
       size="small"
       onClick={deleteOpen}
+      sx={{ marginRight: "8px" }}
     >
       Delete
     </Button>

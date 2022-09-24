@@ -1,5 +1,6 @@
 export interface ReadOneInstanceResponse {
   backup_time: number;
+  backup_completed_time: string;
   disk_size: number;
   flavor_name: string;
   image_name: string;

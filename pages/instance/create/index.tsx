@@ -28,8 +28,8 @@ const InstanceCreate = () => {
   const createInstance = useCreateInstance();
   const [os, setOs] = useState<string>(OS.FEDORA);
   const [name, setName] = useState<string>("");
-  const [numPeople, setNumPeople] = useState<number>(0);
-  const [dataSize, setDataSize] = useState<number>(0);
+  const [numPeople, setNumPeople] = useState<number>(1);
+  const [dataSize, setDataSize] = useState<number>(1);
   const [backupTimes, setBackupTimes] = useState<number>(6);
   const [packages, setPackages] = useState<Array<Packages>>([]);
 
@@ -60,6 +60,11 @@ const InstanceCreate = () => {
   );
 
   usePostModal({ mutation: createInstance });
+
+  const handleChagne = useCallback((handler, value) => {
+    if (value < 1) return;
+    else handler(value);
+  }, []);
 
   return (
     <DefaultLayout>
@@ -106,14 +111,14 @@ const InstanceCreate = () => {
           variant="outlined"
           value={numPeople}
           type="number"
-          onChange={(e) => setNumPeople(+e.target.value)}
+          onChange={(e) => handleChagne(setNumPeople, +e.target.value)}
         />
         <TextField
           label="Expected Data Size"
           variant="outlined"
           value={dataSize}
           type="number"
-          onChange={(e) => setDataSize(+e.target.value)}
+          onChange={(e) => handleChagne(setDataSize, +e.target.value)}
         />
         <FormControl>
           <InputLabel id="Backup">Backup Times</InputLabel>
