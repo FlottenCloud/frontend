@@ -50,9 +50,9 @@ const Instance = () => {
           >
             <Typography variant="h3">{data.instance_name}</Typography>
             <Typography variant="h5">{"SPEC"}</Typography>
+            <Typography>{`disk size : ${data.disk_size} GB`}</Typography>
+            <Typography>{`ram size : ${data.ram_size} GB`}</Typography>
             <Typography>{`num cpu : ${data.num_cpu}`}</Typography>
-            <Typography>{`disk size : ${data.disk_size}`}</Typography>
-            <Typography>{`ram size : ${data.ram_size}`}</Typography>
 
             <Typography variant="h5">{"INFO"}</Typography>
             <Typography>{`ip address : ${data.ip_address}`}</Typography>

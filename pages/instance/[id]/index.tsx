@@ -51,10 +51,10 @@ const Instance = () => {
             <Typography variant="h2">{data.instance_name}</Typography>
             <Typography variant="h5">{"SPEC"}</Typography>
             <Typography>{`installed os : ${data.os}`}</Typography>
-            <Typography>{`num_cpu : ${data.num_cpu}`}</Typography>
             <Typography>{`disk size : ${data.disk_size} GB`}</Typography>
             <Typography>{`ram size : ${data.ram_size} GB`}</Typography>
-            <Typography>installed packages</Typography>
+            <Typography>{`num_cpu : ${data.num_cpu}`}</Typography>
+            <Typography>Installed Packages</Typography>
             <Flex>
               <ul style={{ margin: 0 }}>
                 {data.package.split(",").map((item) => (
@@ -67,7 +67,7 @@ const Instance = () => {
             <Typography variant="h5">{"INFO"}</Typography>
             <Typography>{`ip address : ${data.ip_address}`}</Typography>
             <Typography>{`backup cycle : ${data.backup_time} hour`}</Typography>
-            <Typography>{`Lastest backup time : ${data.backup_completed_time}`}</Typography>
+            <Typography>{`Latest backup time : ${data.backup_completed_time}`}</Typography>
           </Flex>
         </>
       )}

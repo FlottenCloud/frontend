@@ -35,12 +35,12 @@ import styled from "@emotion/styled";
 
 const Titles = [
   { name: "Instance Name", width: "15%" },
-  { name: "Num CPU", width: "10%" },
   { name: "Disk Size", width: "8%" },
-  { name: "IP Address", width: "10%" },
   { name: "Ram Size", width: "8%" },
+  { name: "Num CPU", width: "10%" },
+  { name: "IP Address", width: "10%" },
   { name: "Status", width: "10%" },
-  { name: "Lastest Backup Time", width: "15%" },
+  { name: "Latest Backup Time", width: "15%" },
   { name: "Next Backup Time", width: "15%" },
   { name: "Actions", width: "9%" },
 ] as const;
@@ -198,20 +198,20 @@ const Instance = () => {
                       >
                         {item.instance_name}
                       </TabelStyledCell>
-                      <TableCell align="center" sx={tableCellStyle}>
-                        {item.num_cpu}
-                      </TableCell>
                       <TableCell
                         align="center"
                         sx={tableCellStyle}
                       >{`${item.disk_size}GB`}</TableCell>
-                      <TableCell align="center" sx={tableCellStyle}>
-                        {item.ip_address}
-                      </TableCell>
                       <TableCell
                         align="center"
                         sx={tableCellStyle}
                       >{`${item.ram_size}GB`}</TableCell>
+                      <TableCell align="center" sx={tableCellStyle}>
+                        {item.num_cpu}
+                      </TableCell>
+                      <TableCell align="center" sx={tableCellStyle}>
+                        {item.ip_address}
+                      </TableCell>
                       <TableCell align="center" sx={tableCellStyle}>
                         {item.status}
                       </TableCell>
