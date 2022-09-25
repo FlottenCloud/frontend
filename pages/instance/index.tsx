@@ -35,12 +35,12 @@ import styled from "@emotion/styled";
 
 const Titles = [
   { name: "Instance Name", width: "15%" },
-  { name: "Flavor Name", width: "10%" },
+  { name: "Num CPU", width: "10%" },
   { name: "Disk Size", width: "8%" },
   { name: "IP Address", width: "10%" },
   { name: "Ram Size", width: "8%" },
   { name: "Status", width: "10%" },
-  { name: "Last Backup Completed At", width: "15%" },
+  { name: "Lastest Backup Time", width: "15%" },
   { name: "Next Backup Time", width: "15%" },
   { name: "Actions", width: "9%" },
 ] as const;
@@ -199,7 +199,7 @@ const Instance = () => {
                         {item.instance_name}
                       </TabelStyledCell>
                       <TableCell align="center" sx={tableCellStyle}>
-                        {item.flavor_name}
+                        {item.num_cpu}
                       </TableCell>
                       <TableCell
                         align="center"

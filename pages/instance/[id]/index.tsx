@@ -48,11 +48,12 @@ const Instance = () => {
               padding: "20px",
             }}
           >
-            <Typography variant="h3">{data.instance_name}</Typography>
-            <Typography variant="h5">{"instance spec"}</Typography>
+            <Typography variant="h2">{data.instance_name}</Typography>
+            <Typography variant="h5">{"SPEC"}</Typography>
             <Typography>{`installed os : ${data.os}`}</Typography>
-            <Typography>{`flavor name : ${data.flavor_name}`}</Typography>
-            <Typography>{`disk size : ${data.disk_size}`}</Typography>
+            <Typography>{`num_cpu : ${data.num_cpu}`}</Typography>
+            <Typography>{`disk size : ${data.disk_size} GB`}</Typography>
+            <Typography>{`ram size : ${data.ram_size} GB`}</Typography>
             <Typography>installed packages</Typography>
             <Flex>
               <ul style={{ margin: 0 }}>
@@ -63,10 +64,10 @@ const Instance = () => {
                 ))}
               </ul>
             </Flex>
-            <Typography variant="h5">{"instance info"}</Typography>
+            <Typography variant="h5">{"INFO"}</Typography>
             <Typography>{`ip address : ${data.ip_address}`}</Typography>
-            <Typography>{`backup time : ${data.backup_time} hour`}</Typography>
-            <Typography>{`last backup completed at : ${data.backup_completed_time}`}</Typography>
+            <Typography>{`backup cycle : ${data.backup_time} hour`}</Typography>
+            <Typography>{`Lastest backup time : ${data.backup_completed_time}`}</Typography>
           </Flex>
         </>
       )}
