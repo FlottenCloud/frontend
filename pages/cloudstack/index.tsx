@@ -30,7 +30,7 @@ import _ from "lodash-es";
 
 const Titles = [
   { name: "Instance Name", width: "30%" },
-  { name: "Flavor Name", width: "15%" },
+  { name: "Num CPU", width: "15%" },
   { name: "Disk Size", width: "10%" },
   { name: "IP Address", width: "15%" },
   { name: "Ram Size", width: "10%" },
@@ -145,7 +145,7 @@ const Cloudstack = () => {
                         {item.instance_name}
                       </TabelStyledCell>
                       <TableCell align="center" sx={tableCellStyle}>
-                        {item.flavor_name}
+                        {item.num_cpu}
                       </TableCell>
                       <TableCell
                         align="center"
