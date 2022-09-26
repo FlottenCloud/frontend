@@ -52,7 +52,7 @@ const Instance = () => {
             <Typography variant="h5">{"SPEC"}</Typography>
             <Typography>{`disk size : ${data.disk_size} GB`}</Typography>
             <Typography>{`ram size : ${data.ram_size} GB`}</Typography>
-            <Typography>{`num cpu : ${data.num_cpu}`}</Typography>
+            <Typography>{`cpu core : ${data.num_cpu}`}</Typography>
 
             <Typography variant="h5">{"INFO"}</Typography>
             <Typography>{`ip address : ${data.ip_address}`}</Typography>

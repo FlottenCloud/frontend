@@ -32,7 +32,7 @@ const Titles = [
   { name: "Instance Name", width: "30%" },
   { name: "Disk Size", width: "10%" },
   { name: "Ram Size", width: "10%" },
-  { name: "Num CPU", width: "15%" },
+  { name: "CPU core", width: "15%" },
   { name: "IP Address", width: "15%" },
   { name: "Status", width: "10%" },
   { name: "Actions", width: "10%" },

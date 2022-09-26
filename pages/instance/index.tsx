@@ -37,7 +37,7 @@ const Titles = [
   { name: "Instance Name", width: "15%" },
   { name: "Disk Size", width: "8%" },
   { name: "Ram Size", width: "8%" },
-  { name: "Num CPU", width: "10%" },
+  { name: "CPU core", width: "10%" },
   { name: "IP Address", width: "10%" },
   { name: "Status", width: "10%" },
   { name: "Latest Backup Time", width: "15%" },
@@ -53,7 +53,7 @@ const Instance = () => {
     successCallback: (res: ReadInstanceResponse) => {
       const array = [];
       res.instances.map((item) => {
-        if (item.status === "ERROR") {
+        if (item.status === "RESTORING") {
           array.push(item.instance_name);
         }
       });
@@ -77,7 +77,7 @@ const Instance = () => {
         return itemString;
       });
       window.alert(
-        `인스턴스에 에러가 발생했습니다.\n에러가 발생한 인스턴스 목록 : ${string}\n인스턴스 복구를 시작합니다.`
+        `인스턴스에 에러가 발생했습니다.\n에러가 발생한 인스턴스 목록 : ${string}\n인스턴스 복구를 진행합니다.`
       );
     }
   }, [errors]);
