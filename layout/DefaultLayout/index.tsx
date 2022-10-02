@@ -23,7 +23,9 @@ const DefaultLayout = ({ children, pages }: DefaultLayoutPorps) => {
         <PostModal />
         {/* <ChoiceAlert /> */}
         <Header />
-        <Flex style={{ padding: "20px" }}>{children}</Flex>
+        <Flex style={{ padding: "20px", maxHeight: "calc(100vh - 70.43px)" }}>
+          {children}
+        </Flex>
         {pages !== 0 && pages !== undefined && <Pagination pages={pages} />}
       </Flex>
     </Style.DefaultLayout>

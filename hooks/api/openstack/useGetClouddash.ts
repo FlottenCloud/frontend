@@ -17,7 +17,7 @@ const useReadClouddash = (
 ): QueryResult<ReadDashResponse> => {
   const { successCallback, errorCallback, enabled } = params;
   const response = useQuery(
-    ["read_dash", params],
+    ["read_dash_cloud", params],
     async () => readClouddash(params),
     {
       onSuccess: (res) => {

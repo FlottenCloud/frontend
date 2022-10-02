@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Doughnut, Pie } from "react-chartjs-2";
 import Flex from "components/common/Flex";
 import { Typography } from "@mui/material";
+import FigureImage from "components/common/FigureImage";
 
 interface DashboardItemProps {
   used: number;

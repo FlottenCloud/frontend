@@ -15,3 +15,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+figure {
+  margin: 0px;
+  overflow: hidden;
+  position: relative;
+}

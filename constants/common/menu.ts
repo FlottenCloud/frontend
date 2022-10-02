@@ -19,7 +19,13 @@ export const MENU: Array<menu> = [
     query: {},
   },
   {
-    id: 2,
+    id: 3,
+    title: "CONSOLE",
+    url: "/console",
+    query: {},
+  },
+  {
+    id: 4,
     title: "PROFILE",
     url: "/profile",
     query: {},

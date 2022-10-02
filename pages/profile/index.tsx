@@ -12,7 +12,7 @@ const Profile = () => {
   return (
     <DefaultLayout>
       <Flex width={180}>
-        <Typography variant="h4">{readProfile?.data?.user_id}</Typography>
+        <Typography variant="h5">{readProfile?.data?.user_id}</Typography>
         <Typography>{`user email : ${readProfile?.data?.email}`}</Typography>
         <Typography>{`user name : ${readProfile?.data?.first_name} ${readProfile?.data?.last_name}`}</Typography>
         <Flex style={{ paddingTop: "10px" }}>

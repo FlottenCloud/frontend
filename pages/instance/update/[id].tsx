@@ -68,7 +68,7 @@ const InstanceCreate = () => {
   return (
     <DefaultLayout>
       <Flex style={{ marginBottom: "20px" }}>
-        <Typography variant="h4">Update Instance</Typography>
+        <Typography variant="h5">Update Instance</Typography>
       </Flex>
       <FormControl
         onSubmit={() => {}}

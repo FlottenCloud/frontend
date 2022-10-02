@@ -45,17 +45,14 @@ const Header = () => {
 export default Header;
 
 const getTitle = (router) => {
-  if (
-    router.pathname.includes("instance") ||
-    router.pathname.includes("cloudstack")
-  ) {
+  if (router.pathname.includes("instance")) {
     return "INSTANCE";
   }
-  if (
-    router.pathname.includes("dashboard") ||
-    router.pathname.includes("clouddash")
-  ) {
+  if (router.pathname.includes("dashboard")) {
     return "DASHBOARD";
+  }
+  if (router.pathname.includes("console")) {
+    return "CONSOLE";
   }
   if (router.pathname.includes("profile")) {
     return "PROFILE";

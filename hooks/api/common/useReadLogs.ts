@@ -2,23 +2,23 @@ import { DefaultParams } from "../../../types/api/common/params";
 import { QueryResult } from "types/api/common/response";
 import { useQuery } from "react-query";
 import { DefaultAxiosService } from "types/defaultAxiosService";
-import { ReadInstanceResponse } from "types/api/instance/readInstance";
+import { ReadLogsResponse } from "types/api/common/readLogs";
 
-export interface ReadDashParams extends DefaultParams {}
+export interface ReadDashParams extends DefaultParams {
+  id: string;
+}
 
-const readCloudstack = async (params: ReadDashParams) => {
-  const url = `/cloudstack/`;
+const readLogs = async (params: ReadDashParams) => {
+  const url = `/account/${params.id}/logs/`;
   const { data } = await DefaultAxiosService.instance.get(url);
   return data;
 };
 
-const useReadCloudstack = (
-  params: ReadDashParams
-): QueryResult<ReadInstanceResponse> => {
+const useReadLogs = (params: ReadDashParams): QueryResult<ReadLogsResponse> => {
   const { successCallback, errorCallback, enabled } = params;
   const response = useQuery(
-    ["read_instance_cloud", params],
-    async () => readCloudstack(params),
+    ["read_logs", params],
+    async () => validate(params.id) && readLogs(params),
     {
       onSuccess: (res) => {
         successCallback && res && successCallback(res);
@@ -34,4 +34,8 @@ const useReadCloudstack = (
   return response;
 };
 
-export default useReadCloudstack;
+export default useReadLogs;
+
+const validate = (id: string) => {
+  return id !== "";
+};

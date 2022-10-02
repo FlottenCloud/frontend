@@ -12,7 +12,7 @@ const SideBar = () => {
 
   const handleLogoClick = useCallback(() => {
     router.push({ pathname: "/" });
-  }, []);
+  }, [router]);
 
   return (
     <Style.Sidebar>
@@ -23,7 +23,8 @@ const SideBar = () => {
       >
         <Typography
           variant="h4"
-          style={{ color: COLOR.WHITE, textAlign: "center" }}
+          onClick={handleLogoClick}
+          style={{ color: COLOR.WHITE, textAlign: "center", cursor: "pointer" }}
         >{`뜬구름`}</Typography>
       </Flex>
       <Flex gap={16} style={{ width: "100%" }}>
@@ -45,19 +46,16 @@ const SideBar = () => {
 export default SideBar;
 
 const getIndex = (router) => {
-  if (
-    router.pathname.includes("dashboard") ||
-    router.pathname.includes("clouddash")
-  ) {
+  if (router.pathname.includes("dashboard")) {
     return 0;
   }
-  if (
-    router.pathname.includes("instance") ||
-    router.pathname.includes("cloudstack")
-  ) {
+  if (router.pathname.includes("instance")) {
     return 1;
   }
-  if (router.pathname.includes("profile")) {
+  if (router.pathname.includes("console")) {
     return 2;
+  }
+  if (router.pathname.includes("profile")) {
+    return 3;
   }
 };
