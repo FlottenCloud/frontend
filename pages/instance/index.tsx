@@ -35,12 +35,12 @@ import styled from "@emotion/styled";
 
 const Titles = [
   { name: "Instance Name", width: "15%" },
-  { name: "Flavor Name", width: "10%" },
   { name: "Disk Size", width: "8%" },
-  { name: "IP Address", width: "10%" },
   { name: "Ram Size", width: "8%" },
+  { name: "CPU core", width: "10%" },
+  { name: "IP Address", width: "10%" },
   { name: "Status", width: "10%" },
-  { name: "Last Backup Completed At", width: "15%" },
+  { name: "Latest Backup Time", width: "15%" },
   { name: "Next Backup Time", width: "15%" },
   { name: "Actions", width: "9%" },
 ] as const;
@@ -53,7 +53,7 @@ const Instance = () => {
     successCallback: (res: ReadInstanceResponse) => {
       const array = [];
       res.instances.map((item) => {
-        if (item.status === "ERROR") {
+        if (item.status === "RESTORING") {
           array.push(item.instance_name);
         }
       });
@@ -77,7 +77,7 @@ const Instance = () => {
         return itemString;
       });
       window.alert(
-        `인스턴스에 에러가 발생했습니다.\n에러가 발생한 인스턴스 목록 : ${string}\n인스턴스 복구를 시작합니다.`
+        `인스턴스에 에러가 발생했습니다.\n에러가 발생한 인스턴스 목록 : ${string}\n인스턴스 복구를 진행합니다.`
       );
     }
   }, [errors]);
@@ -198,20 +198,20 @@ const Instance = () => {
                       >
                         {item.instance_name}
                       </TabelStyledCell>
-                      <TableCell align="center" sx={tableCellStyle}>
-                        {item.flavor_name}
-                      </TableCell>
                       <TableCell
                         align="center"
                         sx={tableCellStyle}
                       >{`${item.disk_size}GB`}</TableCell>
-                      <TableCell align="center" sx={tableCellStyle}>
-                        {item.ip_address}
-                      </TableCell>
                       <TableCell
                         align="center"
                         sx={tableCellStyle}
                       >{`${item.ram_size}GB`}</TableCell>
+                      <TableCell align="center" sx={tableCellStyle}>
+                        {item.num_cpu}
+                      </TableCell>
+                      <TableCell align="center" sx={tableCellStyle}>
+                        {item.ip_address}
+                      </TableCell>
                       <TableCell align="center" sx={tableCellStyle}>
                         {item.status}
                       </TableCell>
