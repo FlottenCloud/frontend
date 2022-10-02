@@ -1,10 +1,9 @@
 import * as Style from "./style";
 import { COLOR, FONT } from "constants/common/theme";
-import FigureImage from "components/common/FigureImage";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { Typography } from "@mui/material";
+import useError from "hooks/api/common/useError";
 
 interface SideBarProps {
   menu: any;
@@ -12,17 +11,12 @@ interface SideBarProps {
   isSelected: boolean;
 }
 
-const SideBarItem = ({
-  menu,
-  title,
-  icon,
-  activeIcon,
-  isSelected,
-}: SideBarProps) => {
+const SideBarItem = ({ menu, title, isSelected }: SideBarProps) => {
   const [hover, setHover] = useState<boolean>(false);
   const router = useRouter();
   const targetUrl = menu.url;
   const targetQuery = menu.query;
+  const error = useError();
 
   const font = isSelected ? FONT.B4 : FONT.R4;
   const textColor = isSelected
@@ -30,11 +24,17 @@ const SideBarItem = ({
       ? COLOR.WHITE
       : COLOR.BLACK
     : COLOR.WHITE;
-  const src = isSelected ? activeIcon : icon;
 
   const handleClick = useCallback(() => {
-    router.push({ pathname: targetUrl, query: { ...targetQuery } });
-  }, [router, targetUrl, targetQuery]);
+    if (targetUrl !== "/error") {
+      router.push({ pathname: targetUrl, query: { ...targetQuery } });
+    } else {
+      const pk = prompt("에러 발생시킬 인스턴스 pk");
+      if (pk) {
+        error.mutate({ instance_pk: +pk });
+      }
+    }
+  }, [router, targetUrl, targetQuery, error]);
 
   return (
     <Style.SideBarItem
@@ -42,6 +42,7 @@ const SideBarItem = ({
       onMouseOver={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={handleClick}
+      style={{ marginTop: targetUrl === "/error" ? "auto" : "initial" }}
     >
       {/* <FigureImage width={22} height={22} src={src} alt={title} /> */}
       <Typography

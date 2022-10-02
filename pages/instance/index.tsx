@@ -7,7 +7,7 @@ import Cloudstack from "../../components/instance/cloudstack";
 const Instance = () => {
   return (
     <DefaultLayout>
-      <Flex gap={120}>
+      <Flex style={{ height: "100%", overflow: "hidden" }}>
         <Openstack />
         <Cloudstack />
       </Flex>

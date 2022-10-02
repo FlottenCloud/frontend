@@ -27,7 +27,7 @@ const SideBar = () => {
           style={{ color: COLOR.WHITE, textAlign: "center", cursor: "pointer" }}
         >{`뜬구름`}</Typography>
       </Flex>
-      <Flex gap={16} style={{ width: "100%" }}>
+      <Flex gap={16} style={{ width: "100%", height: "100%" }}>
         {MENU.map((item, index) => {
           return (
             <SideBarItem

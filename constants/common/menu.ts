@@ -30,4 +30,10 @@ export const MENU: Array<menu> = [
     url: "/profile",
     query: {},
   },
+  {
+    id: 5,
+    title: "ERROR",
+    url: "/error",
+    query: {},
+  },
 ];

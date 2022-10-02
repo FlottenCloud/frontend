@@ -31,6 +31,7 @@ import _ from "lodash-es";
 import FigureImage from "components/common/FigureImage";
 import SearchIcon from "@mui/icons-material/Search";
 import useConsoleStore from "store/console";
+import useStatusStore from "store/common/server";
 
 const Titles = [
   { name: "Instance Name", width: "30%" },
@@ -46,6 +47,7 @@ const Cloudstack = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState<string>("");
   const readInstance = useReadCloudstack({});
+  const statusStore = useStatusStore();
   const consoleStore = useConsoleStore();
   const startInstance = useStartInstance();
   const stopInstance = useStopInstance();
@@ -95,10 +97,34 @@ const Cloudstack = () => {
   );
 
   return (
-    <Flex>
+    <Flex style={{ flex: 1 }}>
       {load && (
-        <>
-          <Flex row justify="space-between" align="center">
+        <Flex style={{ flex: 1, position: "relative" }}>
+          {statusStore.getStatus() && (
+            <Flex
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                borderRadius: "5px",
+                width: "100%",
+                height: "100%",
+                zIndex: 9999,
+              }}
+            >
+              <Typography variant="h3" sx={{ color: "white" }}>
+                Cloudstack server not available
+              </Typography>
+            </Flex>
+          )}
+          <Flex
+            row
+            justify="space-between"
+            align="center"
+            padding={[10, 10, 10, 10]}
+          >
             <Flex row gap={10} align="center">
               <FigureImage
                 src={"/images/cloudstack.png"}
@@ -283,7 +309,7 @@ const Cloudstack = () => {
                 })}
             </TableBody>
           </Table>
-        </>
+        </Flex>
       )}
     </Flex>
   );

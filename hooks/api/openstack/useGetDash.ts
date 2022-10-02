@@ -3,8 +3,6 @@ import { QueryResult } from "types/api/common/response";
 import { useQuery } from "react-query";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 import { ReadDashResponse } from "types/api/openstack/readDash";
-import { useRouter } from "next/router";
-import useStatusStore from "store/common/server";
 
 export interface ReadDashParams extends DefaultParams {}
 

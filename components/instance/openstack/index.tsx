@@ -37,6 +37,7 @@ import styled from "@emotion/styled";
 import FigureImage from "components/common/FigureImage";
 import useConsoleStore from "store/console";
 import SearchIcon from "@mui/icons-material/Search";
+import useStatusStore from "store/common/server";
 
 const Titles = [
   { name: "Instance Name", width: "15%" },
@@ -53,6 +54,7 @@ const Titles = [
 const Openstack = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const statusStore = useStatusStore();
   const [search, setSearch] = useState<string>("");
   const [errors, setErrors] = useState<Array<string>>([]);
   const readInstance = useReadInstance({
@@ -141,11 +143,30 @@ const Openstack = () => {
   );
 
   return (
-    <Flex>
+    <Flex style={{ flex: 1 }}>
       {load && (
-        <>
+        <Flex style={{ flex: 1, position: "relative" }}>
+          {!statusStore.getStatus() && (
+            <Flex
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                borderRadius: "5px",
+                width: "100%",
+                height: "100%",
+                zIndex: 9999,
+              }}
+            >
+              <Typography variant="h3" sx={{ color: "white" }}>
+                Openstack server not available
+              </Typography>
+            </Flex>
+          )}
           <Flex row justify="space-between" align="center">
-            <Flex row gap={10} align="center">
+            <Flex row gap={10} align="center" padding={[10, 10, 10, 10]}>
               <FigureImage
                 src={"/images/openstack.png"}
                 alt={"cloudstack"}
@@ -357,7 +378,7 @@ const Openstack = () => {
                 })}
             </TableBody>
           </Table>
-        </>
+        </Flex>
       )}
     </Flex>
   );

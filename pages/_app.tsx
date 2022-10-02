@@ -12,9 +12,8 @@ import {
   ArcElement,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import useStatusStore from "store/common/server";
 
 ChartJS.register(
   ArcElement,
@@ -38,23 +37,8 @@ const queryClient = new QueryClient({
   },
 });
 
-// const socket = io("ws://119.198.160.6:8000/ws/socket-server/", {
-//   transports: ["websocket"],
-// });
-
-// const initSocketConnection = () => {
-//   if (socket) return;
-//   socket.connect();
-// };
-
-// const disconnectSocket = () => {
-//   if (socket == null || socket.connected === false) {
-//     return;
-//   }
-//   socket.disconnect();
-// };
-
 function MyApp({ Component, pageProps }: AppProps) {
+  const statusStore = useStatusStore();
   const { readyState } = useWebSocket(
     "ws://119.198.160.6:8000/ws/socket-server/",
     {
@@ -65,7 +49,21 @@ function MyApp({ Component, pageProps }: AppProps) {
         console.log("Disconnected!");
       },
       onMessage: (e) => {
-        console.log(e);
+        const data = JSON.parse(e.data);
+        console.log("socket message : ", data.message);
+        if (data.type === "server_log") {
+          statusStore.setStatus(
+            data.message.added_log === "Openstack Server Recovered"
+          );
+        }
+        if (data.type !== "connection_established") {
+          if (data.type === "server_log") {
+            alert(data.message.added_log);
+          }
+          if (data.type === "instance_log") {
+            alert(data.message.action);
+          }
+        }
       },
     }
   );

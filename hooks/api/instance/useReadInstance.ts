@@ -3,6 +3,8 @@ import { QueryResult } from "types/api/common/response";
 import { useQuery } from "react-query";
 import { DefaultAxiosService } from "types/defaultAxiosService";
 import { ReadInstanceResponse } from "types/api/instance/readInstance";
+import { useRouter } from "next/router";
+import useStatusStore from "store/common/server";
 
 export interface ReadDashParams extends DefaultParams {}
 
@@ -15,6 +17,8 @@ const readInstance = async (params: ReadDashParams) => {
 const useReadInstance = (
   params: ReadDashParams
 ): QueryResult<ReadInstanceResponse> => {
+  const router = useRouter();
+  const statusStore = useStatusStore();
   const { successCallback, errorCallback, enabled } = params;
   const response = useQuery(
     ["read_instance", params],
@@ -25,6 +29,7 @@ const useReadInstance = (
       },
       onError: (err) => {
         errorCallback && err && errorCallback(err);
+        statusStore.setStatus(false);
       },
       enabled,
       staleTime: 0,

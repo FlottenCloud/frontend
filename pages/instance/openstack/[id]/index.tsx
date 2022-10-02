@@ -57,7 +57,7 @@ const Instance = () => {
             <Typography>Installed Packages</Typography>
             <Flex>
               <ul style={{ margin: 0 }}>
-                {data.package.split(",").map((item) => (
+                {data?.package?.split(",").map((item) => (
                   <li key={item}>
                     <Typography>{item}</Typography>
                   </li>

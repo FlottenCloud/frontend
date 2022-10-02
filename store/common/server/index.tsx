@@ -1,15 +1,15 @@
 import create from "zustand";
 
 interface T {
-  status: string;
+  status: boolean;
 
-  setStatus: (status: string) => void;
+  setStatus: (status: boolean) => void;
 
-  getStatus: () => string;
+  getStatus: () => boolean;
 }
 
 const useStatusStore = create<T>((set: any, get: any) => ({
-  status: "openstack",
+  status: true,
 
   setStatus: (status) => set({ status }),
 
