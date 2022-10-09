@@ -19,12 +19,19 @@ export enum OS {
   UBUNTU = "ubuntu",
 }
 
+export enum PCspecs {
+  LOW = "low",
+  MIDDLE = "middle",
+  HIGH = "high",
+}
+
 export interface CreateInstanceParams extends DefaultParams {
   // system_num: number;
   os: string;
   package: Array<Packages>;
-  num_people: number;
-  data_size: number;
+  // num_people: number;
+  // data_size: number;
+  pc_spec: string;
   instance_name: string;
   backup_time: number;
 }
@@ -34,8 +41,9 @@ const createInstance = async (params: CreateInstanceParams) => {
   const { data } = await DefaultAxiosService.instance.post(url, {
     os: params.os,
     package: params.package,
-    num_people: params.num_people,
-    data_size: params.data_size,
+    // num_people: params.num_people,
+    // data_size: params.data_size,
+    pc_spec: params.pc_spec,
     instance_name: params.instance_name,
     backup_time: params.backup_time,
   });

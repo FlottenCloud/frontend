@@ -16,7 +16,8 @@ export interface ReadOneInstanceResponse {
   status: string;
   update_image: null;
   user_id: string;
-  expected_data_size: number;
+  // expected_data_size: number;
   package: string;
-  num_people: number;
+  // num_people: number;
+  pc_spec: string;
 }

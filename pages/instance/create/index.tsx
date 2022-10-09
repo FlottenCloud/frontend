@@ -2,6 +2,7 @@ import Flex from "components/common/Flex";
 import useCreateInstance, {
   CreateInstanceParams,
   OS,
+  PCspecs,
   Packages,
 } from "hooks/api/instance/useCreateInstance";
 import { useCallback, useState } from "react";
@@ -28,8 +29,9 @@ const InstanceCreate = () => {
   const createInstance = useCreateInstance();
   const [os, setOs] = useState<string>(OS.FEDORA);
   const [name, setName] = useState<string>("");
-  const [numPeople, setNumPeople] = useState<number>(1);
-  const [dataSize, setDataSize] = useState<number>(1);
+  // const [numPeople, setNumPeople] = useState<number>(1);
+  // const [dataSize, setDataSize] = useState<number>(1);
+  const [pcSpecs, setPCspecs] = useState<string>(PCspecs.LOW);
   const [backupTimes, setBackupTimes] = useState<number>(6);
   const [packages, setPackages] = useState<Array<Packages>>([]);
 
@@ -39,8 +41,9 @@ const InstanceCreate = () => {
       const createParams: CreateInstanceParams = {
         os,
         instance_name: name,
-        num_people: numPeople,
-        data_size: dataSize,
+        // num_people: numPeople,
+        // data_size: dataSize,
+        pc_spec: pcSpecs,
         backup_time: backupTimes,
         package: packages,
         successCallback: () => router.push({ pathname: "/instance" }),
@@ -50,9 +53,10 @@ const InstanceCreate = () => {
     [
       backupTimes,
       createInstance,
-      dataSize,
+      // dataSize,
       name,
-      numPeople,
+      // numPeople,
+      pcSpecs,
       os,
       packages,
       router,
@@ -106,7 +110,7 @@ const InstanceCreate = () => {
             setName(newValue);
           }}
         />
-        <TextField
+        {/* <TextField
           label="Number of People"
           variant="outlined"
           value={numPeople}
@@ -119,7 +123,21 @@ const InstanceCreate = () => {
           value={dataSize}
           type="number"
           onChange={(e) => handleChagne(setDataSize, +e.target.value)}
-        />
+        /> */}
+        <FormControl>
+          <InputLabel id="pcSpec">PC Spec</InputLabel>
+          <Select
+            value={pcSpecs}
+            label="PC Spec"
+            onChange={(e) => setPCspecs(e.target.value)}
+          >
+            {Object.values(PCspecs).map((item, index) => (
+              <MenuItem value={item} key={index}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <FormControl>
           <InputLabel id="Backup">Backup Times</InputLabel>
           <Select

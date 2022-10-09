@@ -27,8 +27,9 @@ import usePostModal from "hooks/common/usePostModal";
 const InstanceCreate = () => {
   const router = useRouter();
   const updateInstance = useUpdateInstance();
-  const [numPeople, setNumPeople] = useState<number>(0);
-  const [dataSize, setDataSize] = useState<number>(0);
+  // const [numPeople, setNumPeople] = useState<number>(0);
+  // const [dataSize, setDataSize] = useState<number>(0);
+  const [pcSpecs, setPCspecs] = useState<string>();
   const [backupTimes, setBackupTimes] = useState<number>(6);
   const [packages, setPackages] = useState<Array<string>>([]);
   const [disabled, setDisalbed] = useState<Array<string>>([]);
@@ -43,8 +44,9 @@ const InstanceCreate = () => {
         setPackages(array);
         setDisalbed(array);
       }
-      setNumPeople(+res.num_people);
-      setDataSize(+res.expected_data_size);
+      // setNumPeople(+res.num_people);
+      // setDataSize(+res.expected_data_size);
+      setPCspecs(res.pc_spec);
       setBackupTimes(res.backup_time);
     },
   });
@@ -54,15 +56,16 @@ const InstanceCreate = () => {
       e.preventDefault();
       const updateParams: UpdateInstanceParams = {
         instance_pk: +router?.query?.id,
-        num_people: numPeople,
-        data_size: dataSize,
+        // num_people: numPeople,
+        // data_size: dataSize,
+        pc_spec: pcSpecs,
         backup_time: backupTimes,
         package: packages,
         successCallback: () => router.push({ pathname: "/instance" }),
       };
       updateInstance.mutate(updateParams);
     },
-    [router, numPeople, dataSize, backupTimes, packages, updateInstance]
+    [router, pcSpecs, backupTimes, packages, updateInstance] //numPeople, dataSize,
   );
 
   return (
@@ -79,7 +82,7 @@ const InstanceCreate = () => {
           width: "300px",
         }}
       >
-        <TextField
+        {/* <TextField
           label="Number of People"
           variant="outlined"
           value={numPeople}
@@ -92,7 +95,21 @@ const InstanceCreate = () => {
           value={dataSize}
           type="number"
           onChange={(e) => setDataSize(+e.target.value)}
-        />
+        /> */}
+        <FormControl>
+          <InputLabel id="pcSpec">PC Spec</InputLabel>
+          <Select
+            value={pcSpecs}
+            label="PC Spec"
+            onChange={(e) => setPCspecs(e.target.value)}
+          >
+            {["low", "middle", "high"].map((item, index) => (
+              <MenuItem value={item} key={index}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <FormControl>
           <InputLabel id="Backup">Backup Times</InputLabel>
           <Select

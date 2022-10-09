@@ -40,7 +40,7 @@ const queryClient = new QueryClient({
 function MyApp({ Component, pageProps }: AppProps) {
   const statusStore = useStatusStore();
   const { readyState } = useWebSocket(
-    "ws://119.198.160.6:8000/ws/socket-server/",
+    "ws://10.125.70.26:8000/ws/socket-server/",
     {
       onOpen: () => {
         console.log("Connected!");
