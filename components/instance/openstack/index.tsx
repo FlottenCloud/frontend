@@ -13,7 +13,6 @@ import {
 import useCreateInstance from "hooks/api/instance/useCreateInstance";
 import useReadInstance from "hooks/api/instance/useReadInstance";
 import usePostModal from "hooks/common/usePostModal";
-import DefaultLayout from "layout/DefaultLayout";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import StartIcon from "@mui/icons-material/Start";
 import StopIcon from "@mui/icons-material/Stop";
@@ -38,6 +37,8 @@ import FigureImage from "components/common/FigureImage";
 import useConsoleStore from "store/console";
 import SearchIcon from "@mui/icons-material/Search";
 import useStatusStore from "store/common/server";
+import InstanceCreate from "../create";
+import InstanceUpdate from "../update";
 
 const Titles = [
   { name: "Instance Name", width: "15%" },
@@ -75,6 +76,8 @@ const Openstack = () => {
   const consoleStore = useConsoleStore();
   const [load, setLoad] = useState<boolean>(false);
   const [show, setShow] = useState<Array<number>>([]);
+  const [createOpen, setCreateOpen] = useState<boolean>(false);
+  const [update, setUpdate] = useState<number>(-1);
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -92,8 +95,8 @@ const Openstack = () => {
   }, [errors]);
 
   const handleCreateClick = useCallback(() => {
-    router.push({ pathname: "/instance/create" });
-  }, [router]);
+    setCreateOpen(true);
+  }, []);
 
   const handleStartClick = useCallback(
     (id: number) => {
@@ -135,15 +138,16 @@ const Openstack = () => {
     [consoleInstance, consoleStore, router]
   );
 
-  const handleUpdateClick = useCallback(
-    (id: number) => {
-      router.push({ pathname: `/instance/update/${id}` });
-    },
-    [router]
-  );
+  const handleUpdateClick = useCallback((id: number) => {
+    setUpdate(id);
+  }, []);
 
   return (
     <Flex style={{ flex: 1 }}>
+      {createOpen && <InstanceCreate close={() => setCreateOpen(false)} />}
+      {update !== -1 && (
+        <InstanceUpdate id={update} close={() => setUpdate(-1)} />
+      )}
       {load && (
         <Flex style={{ flex: 1, position: "relative" }}>
           {!statusStore.getStatus() && (
@@ -157,7 +161,7 @@ const Openstack = () => {
                 borderRadius: "5px",
                 width: "100%",
                 height: "100%",
-                zIndex: 9999,
+                zIndex: 500,
               }}
             >
               <Typography variant="h3" sx={{ color: "white" }}>
@@ -195,7 +199,7 @@ const Openstack = () => {
                   sx={{ ml: 1, flex: 1 }}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search Instancce"
+                  placeholder="Search Instance"
                 />
                 <IconButton type="button" sx={{ p: "10px" }}>
                   <SearchIcon />

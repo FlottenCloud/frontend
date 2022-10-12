@@ -5,9 +5,9 @@ export const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 250px;
+  width: 120px;
   background-color: #121828;
-  padding: 20px;
+  padding: 40px 0;
 `;
 
 interface SideBarItemProps {
@@ -18,11 +18,9 @@ export const SideBarItem = styled.div<SideBarItemProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1rem;
   width: 100%;
   background-color: ${({ isSelected }) =>
-    isSelected ? COLOR.WHITE : COLOR.SIDEBAR};
-  border-radius: 4px;
+    isSelected ? COLOR.GRAY : COLOR.SIDEBAR};
   padding: 0.5rem 0.8rem;
   &:hover {
     cursor: pointer;

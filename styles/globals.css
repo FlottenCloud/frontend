@@ -21,3 +21,11 @@ figure {
   overflow: hidden;
   position: relative;
 }
+
+.css-byk1sj-MuiTableRow-root {
+  z-index: inherit;
+}
+
+/* .css-10nakn3-MuiModal-root-MuiPopover-root-MuiMenu-root {
+  z-index: 100000;
+} */

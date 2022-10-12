@@ -1,6 +1,7 @@
 export enum COLOR {
   BLACK = "#000000",
   WHITE = "#FFFFFF",
+  GRAY = "#DDD",
   BORDER = "#E3E6ED",
   KEY_COLOR = "#1976d2",
   SIDEBAR = "#121828",

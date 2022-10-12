@@ -32,6 +32,7 @@ import FigureImage from "components/common/FigureImage";
 import SearchIcon from "@mui/icons-material/Search";
 import useConsoleStore from "store/console";
 import useStatusStore from "store/common/server";
+import InstanceCreate from "../create";
 
 const Titles = [
   { name: "Instance Name", width: "30%" },
@@ -78,7 +79,7 @@ const Cloudstack = () => {
   }, []);
 
   const handleRefreshClick = useCallback(() => {
-    queryClient.invalidateQueries("read_instance");
+    queryClient.invalidateQueries("read_instance_cloud");
   }, [queryClient]);
 
   const handleConsoleClick = useCallback(
@@ -111,12 +112,13 @@ const Cloudstack = () => {
                 borderRadius: "5px",
                 width: "100%",
                 height: "100%",
-                zIndex: 9999,
+                zIndex: 500,
               }}
             >
-              <Typography variant="h3" sx={{ color: "rgb(240,240,240)" }}>
-                
-              </Typography>
+              <Typography
+                variant="h3"
+                sx={{ color: "rgb(240,240,240)" }}
+              ></Typography>
             </Flex>
           )}
           <Flex
@@ -154,7 +156,7 @@ const Cloudstack = () => {
                   sx={{ ml: 1, flex: 1 }}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search Instancce"
+                  placeholder="Search Instance"
                 />
                 <IconButton type="button" sx={{ p: "10px" }}>
                   <SearchIcon />

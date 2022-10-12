@@ -3,12 +3,15 @@ import SideBarItem from "./SideBarItem";
 import * as Style from "./style";
 import Flex from "components/common/Flex";
 import { MENU } from "constants/common/menu";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Typography } from "@mui/material";
 import { COLOR } from "constants/common/theme";
+import CloudIcon from "@mui/icons-material/CloudCircle";
+import Profile from "components/profile";
 
 const SideBar = () => {
   const router = useRouter();
+  const [profileOpen, setProfileOpen] = useState<boolean>(false);
 
   const handleLogoClick = useCallback(() => {
     router.push({ pathname: "/" });
@@ -18,16 +21,24 @@ const SideBar = () => {
     <Style.Sidebar>
       <Flex
         padding={[0, 10, 20, 10]}
-        justify="center"
-        style={{ width: "100%" }}
+        align="center"
+        style={{ width: "100%", gap: "8px" }}
       >
+        <CloudIcon
+          viewBox="0 0 24 24"
+          style={{ color: "white" }}
+          sx={{
+            width: "36px",
+            height: "36px",
+          }}
+        />
         <Typography
-          variant="h4"
+          variant="h5"
           onClick={handleLogoClick}
           style={{ color: COLOR.WHITE, textAlign: "center", cursor: "pointer" }}
         >{`뜬구름`}</Typography>
       </Flex>
-      <Flex gap={16} style={{ width: "100%", height: "100%" }}>
+      <Flex style={{ width: "100%", height: "100%" }}>
         {MENU.map((item, index) => {
           return (
             <SideBarItem
@@ -35,10 +46,18 @@ const SideBar = () => {
               menu={item}
               title={item.title}
               isSelected={getIndex(router) === index}
+              profileOpen={setProfileOpen}
             />
           );
         })}
       </Flex>
+      {profileOpen && (
+        <Profile
+          close={() => {
+            setProfileOpen(false);
+          }}
+        />
+      )}
     </Style.Sidebar>
   );
 };

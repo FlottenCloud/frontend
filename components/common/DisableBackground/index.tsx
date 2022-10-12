@@ -1,3 +1,4 @@
+import Flex from "../Flex";
 import * as Style from "./style";
 
 interface DisableBackgroundProps {
@@ -23,7 +24,7 @@ const DisableBackground = ({
           onClick={onClick}
           zIndex={zIndex}
         >
-          {children}
+          <Flex onClick={(e) => e.stopPropagation()}>{children}</Flex>
         </Style.DisableBackground>
       )}
     </>
