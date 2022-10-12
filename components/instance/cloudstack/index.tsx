@@ -107,15 +107,15 @@ const Cloudstack = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 position: "absolute",
-                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                backgroundColor: "rgba(0, 0, 0, 0.03)",
                 borderRadius: "5px",
                 width: "100%",
                 height: "100%",
                 zIndex: 9999,
               }}
             >
-              <Typography variant="h3" sx={{ color: "white" }}>
-                Cloudstack server not available
+              <Typography variant="h3" sx={{ color: "rgb(240,240,240)" }}>
+                
               </Typography>
             </Flex>
           )}
